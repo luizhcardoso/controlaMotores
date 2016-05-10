@@ -8,14 +8,14 @@ import javax.swing.JFrame;
 
 import BancoDeDados.DaoPontoLeitura;
 import Entity.pontoDeLeitura;
-import Telas.telaInicial;
+import Teste.telaInicial;
 import View.TelaPrincipalMonitora;
 import motor.LerDadosWeb;
 
 public class TimerLeituraEGravacao {
 	
 	    Timer timer;
-	    TelaPrincipalMonitora frame;
+	    static TelaPrincipalMonitora frame;
 	    public TimerLeituraEGravacao() {
 	        
 	        timer = new Timer();
@@ -32,12 +32,10 @@ public class TimerLeituraEGravacao {
 	              LerDadosWeb ler=new LerDadosWeb();
 	              System.out.println(ler.LerDadosWeb());
 	              pontoDeLeitura ponto=ler.retornaPontoDeLeitura();
-	              daoPontoLeitura.verificaAlteracaoDeEstadoDosMotores(ponto);
-	              frame=new TelaPrincipalMonitora(ponto);
-	             
-	              
-	              
-	        }
+	              ponto.setStatus(new controlaUsinada().verificaProcessosUsinada(ponto));
+	              daoPontoLeitura.gravaNoBancoVerificaAlteracaoDeEstado(ponto);
+	              frame.verificaEstado(ponto);
+	       }
 	        
 	        public void stopTimer(){
 	        timer.cancel();
@@ -47,7 +45,7 @@ public class TimerLeituraEGravacao {
 	    
 	    public static void main(String args[]) {
 	    	TimerLeituraEGravacao t= new TimerLeituraEGravacao();
+	    	frame=new TelaPrincipalMonitora();
 	    	
-	    	System.out.println("Task scheduled.");
 	    }
 }

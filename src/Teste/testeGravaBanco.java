@@ -18,7 +18,6 @@ import BancoDeDados.DaoPontoLeitura;
 import BancoDeDados.DaoUsinada;
 import Entity.Usinada;
 import Entity.pontoDeLeitura;
-import Telas.telaInicial;
 import motor.LerDadosWeb;
 
 public class testeGravaBanco {

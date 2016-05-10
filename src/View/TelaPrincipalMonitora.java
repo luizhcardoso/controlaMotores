@@ -10,7 +10,7 @@ import java.awt.Component;
 import javax.swing.border.EmptyBorder;
 
 import Entity.pontoDeLeitura;
-import Telas.telaInicial;
+import Teste.telaInicial;
 
 import java.awt.Color;
 import java.awt.SystemColor;
@@ -19,6 +19,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JMenu;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 
 public class TelaPrincipalMonitora extends JFrame{
 
@@ -45,12 +46,6 @@ public class TelaPrincipalMonitora extends JFrame{
 		initialize();
 		
 	}
-	public TelaPrincipalMonitora(pontoDeLeitura ponto) {
-		initialize();
-		verificaEstado(ponto);
-		
-	}
-
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -58,7 +53,7 @@ public class TelaPrincipalMonitora extends JFrame{
 		
 		setTitle("Monitora Motores");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TelaPrincipalMonitora.class.getResource("/IMG/MOTOR_LIGADO.png")));
-		setBounds(100, 100, 1234, 831);
+		setBounds(100, 100, 1195, 913);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new GridLayout(1, 0, 0, 0));
 		setVisible(true);
@@ -145,12 +140,13 @@ public class TelaPrincipalMonitora extends JFrame{
 		panel.add(lblNewLabel);
 		
 		 lblUltimaLeituraGravada = new JLabel("Ultima Leitura Gravada:");
-		lblUltimaLeituraGravada.setBounds(809, 63, 173, 20);
+		lblUltimaLeituraGravada.setBounds(690, 60, 173, 20);
 		panel.add(lblUltimaLeituraGravada);
 		
 		 label_1 = new JLabel("...");
+		 label_1.setPreferredSize(new Dimension(30, 40));
 		label_1.setAlignmentX(Component.CENTER_ALIGNMENT);
-		label_1.setBounds(997, 63, 173, 20);
+		label_1.setBounds(863, 60, 256, 20);
 		panel.add(label_1);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -173,6 +169,13 @@ public class TelaPrincipalMonitora extends JFrame{
 		mnRelatrios.add(mntmRelattioLeiturasData);
 		
 		JMenuItem mntmRelatorioUsinada = new JMenuItem("Relatorio Usinada");
+		mntmRelatorioUsinada.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+				telaUsinada=new RelatorioDeUsinada();
+				telaUsinada.setVisible(true);
+			}
+		});
 		mnRelatrios.add(mntmRelatorioUsinada);
 		
 	}
@@ -192,11 +195,13 @@ public class TelaPrincipalMonitora extends JFrame{
 		
 		if(ponto.isMotorTransferenciaSkidA()){
 			label.setIcon(new ImageIcon("C:\\Users\\LUIZAO\\workspace\\MonitoraMotores\\resources\\IMG\\MOTOR_LIGADO.png"));
+			lblNewLabel_1.setText("Motor Pressao A - MOTOR_LIGADO");
 		}else{
 			label.setIcon(new ImageIcon("C:\\Users\\LUIZAO\\workspace\\MonitoraMotores\\resources\\IMG\\MOTOR_DESLIGADO.png"));
 		}
 		if(ponto.isMotorTransferenciaSkidB()){
 			label_2.setIcon(new ImageIcon("C:\\Users\\LUIZAO\\workspace\\MonitoraMotores\\resources\\IMG\\MOTOR_LIGADO.png"));
+			lblMotorpressaoA.setText("Motor Pressao B - MOTOR_LIGADO");
 		}else{
 			label_2.setIcon(new ImageIcon("C:\\Users\\LUIZAO\\workspace\\MonitoraMotores\\resources\\IMG\\MOTOR_DESLIGADO.png"));
 		}
@@ -207,17 +212,14 @@ public class TelaPrincipalMonitora extends JFrame{
 		}
 		if(ponto.isPortaUsina()){
 			label_13.setIcon(new ImageIcon("C:\\Users\\LUIZAO\\workspace\\MonitoraMotores\\resources\\IMG\\PORTA_ABERTA.png"));
+			lblEstadoDaPorta.setText("PORTA_ABERTA");
 		}else{
 			label_13.setIcon(new ImageIcon("C:\\Users\\LUIZAO\\workspace\\MonitoraMotores\\resources\\IMG\\PORTA_FECHADA.png"));
+			lblEstadoDaPorta.setText("PORTA_FECHADA");
 		}
 		label_1.setText(ponto.getData().toString());
 		repaint();
-		
-			
 	}
-	
-
-
 	private JLabel lblNewLabel_1;
 	private JLabel label;
 	private JLabel lblTranferenciaMotorB;
@@ -236,5 +238,6 @@ public class TelaPrincipalMonitora extends JFrame{
 	private JLabel lblUltimaLeituraGravada;
 	private JLabel label_1;
 	private Historico telaHistorico;	
+	private RelatorioDeUsinada telaUsinada;
 	}
 

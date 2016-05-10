@@ -27,7 +27,8 @@ public static void main(String[] args) throws ParseException {
 //	
 //	System.out.println(b.toStringThis());
 	pontoDeLeitura a=new pontoDeLeitura(new Date(), true, true, true, true, true, true);
-	TelaPrincipalMonitora tela=new TelaPrincipalMonitora(a);
+	TelaPrincipalMonitora tela=new TelaPrincipalMonitora();
+	tela.verificaEstado(a);
 	tela.setVisible(true);
 	}
 }

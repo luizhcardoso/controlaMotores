@@ -18,7 +18,7 @@ import javax.swing.text.EditorKit;
 import javax.swing.text.html.HTMLDocument;
 import javax.swing.text.html.HTMLEditorKit;
 
-import Telas.telaInicial;
+import Teste.telaInicial;
 
 public class Main {
 

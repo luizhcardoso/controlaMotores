@@ -5,22 +5,22 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import Entity.Usinada;
 import Entity.pontoDeLeitura;
 
-public class MotorTableModel extends AbstractTableModel {
+public class MotorTableModelUsinada extends AbstractTableModel {
 
-	private List<pontoDeLeitura> linhas;
+	private List<Usinada> linhas;
 	private String[] colunas = new String[]{
-			"Codigo","Horario","Estado Motor1","Estado Motor2","Estado Motor3","Estado Motor4","Estado Motor5","Porta Usina"};
+		"Codigo","Status"};
 
-
-	public MotorTableModel() {
-		linhas = new ArrayList<pontoDeLeitura>();
+	public MotorTableModelUsinada() {
+		linhas = new ArrayList<Usinada>();
 		
 	}
 
-	public MotorTableModel(List<pontoDeLeitura> lista) {
-		linhas = new ArrayList<pontoDeLeitura>(lista);
+	public MotorTableModelUsinada(List<Usinada> lista) {
+		linhas = new ArrayList<Usinada>(lista);
 	}
 
 	@Override
@@ -47,18 +47,6 @@ public class MotorTableModel extends AbstractTableModel {
 			return String.class;
 		case 1:
 			return String.class;
-		case 2:
-			return String.class;
-		case 3:
-			return String.class;
-		case 4:
-			return String.class;
-		case 5:
-			return String.class;
-		case 6:
-			return String.class;
-		case 7:
-			return String.class;
 		default:
 
 			return null;
@@ -70,14 +58,14 @@ public class MotorTableModel extends AbstractTableModel {
 		return false;
 	}
 
-	public pontoDeLeitura getLinha(int indiceLinha) {
+	public Usinada getLinha(int indiceLinha) {
 		if (indiceLinha < linhas.size()) {
 			return linhas.get(indiceLinha);
 		}
 		return null;
 	}
 
-	public void addDados(pontoDeLeitura func) {
+	public void addDados(Usinada func) {
 		linhas.add(func);
 
 		int ultimoIndice = getRowCount() - 1;
@@ -93,7 +81,7 @@ public class MotorTableModel extends AbstractTableModel {
 
 	}
 
-	public void addListaDePostos(List<pontoDeLeitura> funcs) {
+	public void addListaDePostos(List<Usinada> funcs) {
 		int tamanhoAntigo = getRowCount();
 
 		linhas.addAll(funcs);
@@ -116,26 +104,26 @@ public class MotorTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		pontoDeLeitura dados = new pontoDeLeitura();
+		Usinada dados = new Usinada();
 		dados=linhas.get(rowIndex);
 
 		switch (columnIndex) {
 		case 0:
 			return dados.getCodigo();
 		case 1:
-			return dados.getData();
-		case 2:
-			return dados.isMotorPressaoSkidA();
-		case 3:
-			return dados.isMotorPressaoSkidB();
-		case 4:
-			return dados.isMotorTransferenciaSkidA();
-		case 5:
-			return dados.isMotorTransferenciaSkidB();
-		case 6:
-			return dados.isMotorVacuo();
-		case 7:
-			return dados.isPortaUsina();
+			return dados.getStatus();
+//		case 2:
+//			return dados.isMotorPressaoSkidA();
+//		case 3:
+//			return dados.isMotorPressaoSkidB();
+//		case 4:
+//			return dados.isMotorTransferenciaSkidA();
+//		case 5:
+//			return dados.isMotorTransferenciaSkidB();
+//		case 6:
+//			return dados.isMotorVacuo();
+//		case 7:
+//			return dados.isPortaUsina();
 		default:
 			return null;
 			

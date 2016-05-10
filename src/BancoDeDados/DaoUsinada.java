@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
@@ -20,40 +21,6 @@ public class DaoUsinada implements Serializable {
 	// Create an EntityManagerFactory when you start the application.
 	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
 			.createEntityManagerFactory("motor");
-
-	public void escreveUsinada(List<pontoDeLeitura> pontosDeLeituras, String status) {
-		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
-		EntityTransaction transaction = null;
-
-		try {
-
-			// Get a transaction
-			transaction = manager.getTransaction();
-
-			// Begin the transaction
-			transaction.begin();
-			// Create a new  object
-			Usinada pt = new Usinada();
-			pt.setPontosDeLeituras(pontosDeLeituras);
-			pt.setStatus(status);
-
-			// Save the student object
-			manager.persist(pt);
-			System.out.println("gravou");
-			// Commit the transaction
-			transaction.commit();
-		} catch (Exception ex) {
-			// If there are any exceptions, roll back the changes
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			// Print the Exception
-			ex.printStackTrace();
-		} finally {
-			// Close the EntityManager
-			manager.close();
-		}
-	}
 
 	public void escreveUsinada(Usinada usinada) {
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -88,9 +55,40 @@ public class DaoUsinada implements Serializable {
 	 * 
 	 * @return a List of Students
 	 */
-	public List readAll() {
+	
+	public List<Usinada> retornaTodoBanco() {
 
 		List<Usinada> usinada = null;
+
+		// Create an EntityManager
+		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+		EntityTransaction transaction = null;
+
+		try {
+			transaction = manager.getTransaction();
+			transaction.begin();
+			
+			Query query= manager.createQuery("from Usinada u ");
+			usinada=query.getResultList();
+
+		} catch (Exception ex) {
+			// If there are any exceptions, roll back the changes
+			if (transaction != null) {
+				transaction.rollback();
+			}
+			// Print the Exception
+			ex.printStackTrace();
+		} finally {
+			// Close the EntityManager
+			manager.close();
+		}
+		return usinada;
+	}
+
+	
+	public Usinada retornaUsinadaCodigo(int codigo) {
+
+		Usinada usinada = null;
 
 		// Create an EntityManager
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -103,10 +101,9 @@ public class DaoUsinada implements Serializable {
 			transaction.begin();
 
 			// Get a List of Students
+		
 			
-			usinada = manager.createQuery(
-					"from Usinada,pontoDeLeitura",
-					Usinada.class).getResultList();
+			usinada = manager.find(Usinada.class, codigo);
 
 			// Commit the transaction
 			transaction.commit();
@@ -268,26 +265,16 @@ public class DaoUsinada implements Serializable {
 	}
 	public String imprimeTodoBanco(){
 		String imprime="=======================Usinadas================================\n";
-		List<Usinada> usinada=readAll();
+		List<Usinada> usinada=retornaTodoBanco();
 		for(Usinada b : usinada){
-			imprime+="-----------------------Usinada Codigo : ["+b.getCodigo()+"]-------------------------------\n"+
-					"Codigo " +  b.getCodigo() +"\n"+
+			imprime+="----------------------- Usinada Codigo : ["+b.getCodigo()+"]-------------------------------\n"+
 					"Status  " +  b.getStatus()+"\n"+
 					".................Dados usinada......................\n";
 
 			 
-//			for(pontoDeLeitura i : b.getPontosDeLeituras()){
-//				imprime+=
-//						"Codigo " +  i.getCodigo() +"\n"+
-//								"PortaUsina  " +  i.isPortaUsina()+"\n"+
-//								"MotorVacuo  " +  i.isMotorVacuo()+"\n"+
-//								"MotorPressaoSkidA  " +  i.isMotorPressaoSkidA()+"\n"+
-//								"MotorPressaoSkidB  " +  i.isMotorPressaoSkidB()+"\n"+
-//								"MotorTransferenciaSkidA  " +  i.isMotorTransferenciaSkidA()+"\n"+
-//								"MotorTransferenciaSkidB  " +  i.isMotorTransferenciaSkidB()+"\n"+
-//								"Data  " +  i.getData()+"\n"
-//								+ "___________________________________________________________";
-//			}
+			for(pontoDeLeitura i : b.getPontosDeLeituras()){
+				imprime+=i.toStringThis();						
+			}
 
 			
 		}
@@ -315,28 +302,5 @@ public class DaoUsinada implements Serializable {
 		//		}
 		//	}
 
-	public void retornaObj(){
-		
-		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
-		EntityTransaction transaction = null;
-			// Get a transaction
-			transaction = manager.getTransaction();
-			// Begin the transaction
-			transaction.begin();
-
-			// Get the Student object
-					
-		 
-	        String query = "select a.*, u.* from Usinada u, pontoDeLeitura a where a.codigo=u.codigo";
-	        
-	        List results = manager.createQuery(query).list();
-	        for (Iterator iter = results.iterator(); iter.hasNext();) {
-	           Object object[] = (Object[]) iter.next();
-	           log.debug("Club:  "+object[0]+ " Member: "+object[1]);
-	      
 	
-		
-		
-	}
-
 	}

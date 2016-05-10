@@ -2,14 +2,14 @@
  * Created by JFormDesigner on Wed Apr 27 18:35:39 BRT 2016
  */
 
-package Telas;
+package Teste;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
 import BancoDeDados.DaoPontoLeitura;
-import View.MotorTableModel;
+import View.MotorTableModelPontoDeLeitura;
 
 
 /**
@@ -19,7 +19,7 @@ public class Relatorio extends JFrame {
 	
 	public DaoPontoLeitura daoPontoLeitura;
 	public Relatorio() {
-		MotorTableModel table=new MotorTableModel(new DaoPontoLeitura().readAll());
+		MotorTableModelPontoDeLeitura table=new MotorTableModelPontoDeLeitura(new DaoPontoLeitura().readAll());
 		initComponents();
 		table1.setModel((table));
 		repaint();
@@ -28,7 +28,7 @@ public class Relatorio extends JFrame {
 	private void button1MouseReleased(MouseEvent e) {
 		daoPontoLeitura=new DaoPontoLeitura();
 		table1.removeAll();
-		table1.setModel(new MotorTableModel(
+		table1.setModel(new MotorTableModelPontoDeLeitura(
 				daoPontoLeitura.retornaIntervaloDeData(textField1.getText(), textField2.getText())));
 		
 		

@@ -1,6 +1,10 @@
 package Controler;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import Entity.pontoDeLeitura;
@@ -122,6 +126,47 @@ public class controlaUsinada {
 			}
 		}
 		
+		
+		
 
 	}
+	
+	public String calculaDiferencaDeHoras(Date data1, Date data2){
+		String txt=null;   
+		try{
+			      // constrói a primeira data
+			      DateFormat fm = new SimpleDateFormat(
+			        "dd/MM/yyyy HH:mm:ss");
+			      Date data1 = (Date)fm.parse("20/12/2008 16:20:12");
+
+			      // constrói a segunda data
+			      fm = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+			      Date data2 = (Date)fm.parse("30/12/2008 21:30:15");
+
+			      // vamos obter a diferença em semanas, dias, horas,
+			      // minutos e segundos
+			      long segundos = (data2.getTime() - 
+			        data1.getTime()) / 1000;
+			      int semanas = (int)Math.floor(segundos / 604800);
+			      segundos -= semanas * 604800;
+			      int dias = (int)Math.floor(segundos / 86400);
+			      segundos -= dias * 86400;
+			      int horas = (int)Math.floor(segundos / 3600);
+			      segundos -= horas * 3600;
+			      int minutos = (int)Math.floor(segundos / 60);
+			      segundos -= minutos * 60;
+
+			      // exibe o resultado
+			      txt=("As duas datas tem " +
+			        semanas + " semanas, " + dias + " dias, " + 
+			        horas + " horas, " + minutos + " minutos e " +
+			        segundos + " segundos de diferença");
+			    }
+			    catch(ParseException e){
+			      e.printStackTrace();
+			    }
+		   return txt;
+	}
+	
+	
 }

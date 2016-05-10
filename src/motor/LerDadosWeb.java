@@ -23,6 +23,7 @@ import Entity.pontoDeLeitura;
 public class LerDadosWeb {
 	final String endereco="http://192.168.1.123/";
 	final String enderecoLocalTeste="file:///C:/Users/LUIZAO/workspace/MonitoraMotores/resources/dadosWeb.html";
+	
 	public String LerDadosWeb() {
 
 		final StringBuffer buf = new StringBuffer(1000);

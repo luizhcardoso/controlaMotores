@@ -50,6 +50,13 @@ public class pontoDeLeitura implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date data;
 	
+	public Usinada getUsinada() {
+		return usinada;
+	}
+	public void setUsinada(Usinada usinada) {
+		this.usinada = usinada;
+	}
+
 	@ManyToOne
 	@JoinColumn(name="usinada")
 	private Usinada usinada; 
@@ -155,7 +162,7 @@ public class pontoDeLeitura implements Serializable {
 					+ "PORTA USINA = " + isPortaUsina()+"\n"
 					+ "DATA        = " + getData()+"\n"
 					+ "Status        = " + getStatus()+"\n"
-							+ "-------------------------------");
+							+ "-------------------------------\n");
 		
 	}
 	

@@ -13,7 +13,8 @@ import Entity.pontoDeLeitura;
 public class SimulaUsinada {
 	public static void main(String[] args) {
 		
-
+	Usinada usin=new Usinada();
+		
 	pontoDeLeitura desligado=new pontoDeLeitura(
 			new Date(),
 			false,
@@ -82,15 +83,38 @@ public class SimulaUsinada {
 			false,
 			false,
 			false);
+	desligado.setUsinada(usin);
+	vacuoIncial.setUsinada(usin);
+	enchimento.setUsinada(usin);
+	pressao.setUsinada(usin);
+	retorno.setUsinada(usin);
+	vacuoFinal.setUsinada(usin);
+	abreUsina.setUsinada(usin);
 	
-	List<pontoDeLeitura> usina=new ArrayList<>();
-	usina.add(desligado);
-	usina.add(vacuoIncial);
-	usina.add(enchimento);
-	usina.add(pressao);
-	usina.add(retorno);
-	usina.add(vacuoFinal);
-	usina.add(abreUsina);
+	desligado.setStatus(new controlaUsinada().verificaProcessosUsinada(desligado));
+	vacuoIncial.setStatus(new controlaUsinada().verificaProcessosUsinada(vacuoIncial));
+	enchimento.setStatus(new controlaUsinada().verificaProcessosUsinada(enchimento));
+	pressao.setStatus(new controlaUsinada().verificaProcessosUsinada(pressao));
+	retorno.setStatus(new controlaUsinada().verificaProcessosUsinada(retorno));
+	vacuoFinal.setStatus(new controlaUsinada().verificaProcessosUsinada(vacuoFinal));
+	abreUsina.setStatus(new controlaUsinada().verificaProcessosUsinada(abreUsina));
+	
+	
+	List<pontoDeLeitura> array=new ArrayList<>();
+	array.add(desligado);
+	array.add(vacuoIncial);
+	array.add(enchimento);
+	array.add(pressao);
+	array.add(retorno);
+	array.add(vacuoFinal);
+	array.add(abreUsina);
+	
+	usin.setPontosDeLeituras(array);
+	
+	DaoUsinada u=new DaoUsinada();
+	u.escreveUsinada(usin);
+	
+
 	
 //	controlaUsinada controla=new controlaUsinada();
 //	System.out.println(controla.verificaProcessosUsinada(desligado));
@@ -102,23 +126,6 @@ public class SimulaUsinada {
 //	System.out.println(controla.verificaProcessosUsinada(abreUsina));
 //	
 //	
-	
-	DaoUsinada usinada=new DaoUsinada();
-	usinada.escreveUsinada(usina,"teste2");
-	
-	System.out.println(usinada.imprimeTodoBanco());
-	List<Usinada> a=usinada.readAll();
-	for (Usinada i : a) {
-		System.out.println(i.getCodigo());
-//		System.out.println(i.getPontosDeLeituras());
-	}
-	DaoPontoLeitura ponto=new DaoPontoLeitura();
-
-	
-	
-	
-	
-//	System.out.println(usinada.imprimeTodoBanco());
 	
 	
 	}

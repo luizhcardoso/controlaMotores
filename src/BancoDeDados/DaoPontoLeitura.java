@@ -19,47 +19,47 @@ public class DaoPontoLeitura {
 	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
 			.createEntityManagerFactory("motor");
 
-	public void escrevePontoLeitura(Date date, 
-			boolean pressaoSkidA, boolean pressaoSkidB, boolean transferenciaSkindA, 
-			boolean transferenciaSkidB, boolean vacuo, boolean portaUsina) {
-		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
-		EntityTransaction transaction = null;
-
-		try {
-
-			// Get a transaction
-			transaction = manager.getTransaction();
-
-			// Begin the transaction
-			transaction.begin();
-			// Create a new  object
-			pontoDeLeitura pt = new pontoDeLeitura();
-			pt.setPortaUsina(portaUsina);
-			pt.setMotorVacuo(vacuo);
-			pt.setMotorPressaoSkidA(pressaoSkidA);
-			pt.setMotorPressaoSkidB(pressaoSkidB);
-			pt.setMotorTransferenciaSkidA(transferenciaSkindA);
-			pt.setMotorTransferenciaSkidB(transferenciaSkidB);
-			pt.setData(date);
-
-			// Save the student object
-			manager.persist(pt);
-			System.out.println("gravou");
-			// Commit the transaction
-			transaction.commit();
-		} catch (Exception ex) {
-			// If there are any exceptions, roll back the changes
-			if (transaction != null) {
-				transaction.rollback();
-			}
-			// Print the Exception
-			ex.printStackTrace();
-		} finally {
-			// Close the EntityManager
-			manager.close();
-		}
-	}
-	
+//	public void escrevePontoLeitura(Date date, 
+//			boolean pressaoSkidA, boolean pressaoSkidB, boolean transferenciaSkindA, 
+//			boolean transferenciaSkidB, boolean vacuo, boolean portaUsina) {
+//		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
+//		EntityTransaction transaction = null;
+//
+//		try {
+//
+//			// Get a transaction
+//			transaction = manager.getTransaction();
+//
+//			// Begin the transaction
+//			transaction.begin();
+//			// Create a new  object
+//			pontoDeLeitura pt = new pontoDeLeitura();
+//			pt.setPortaUsina(portaUsina);
+//			pt.setMotorVacuo(vacuo);
+//			pt.setMotorPressaoSkidA(pressaoSkidA);
+//			pt.setMotorPressaoSkidB(pressaoSkidB);
+//			pt.setMotorTransferenciaSkidA(transferenciaSkindA);
+//			pt.setMotorTransferenciaSkidB(transferenciaSkidB);
+//			pt.setData(date);
+//
+//			// Save the student object
+//			manager.persist(pt);
+//			System.out.println("gravou");
+//			// Commit the transaction
+//			transaction.commit();
+//		} catch (Exception ex) {
+//			// If there are any exceptions, roll back the changes
+//			if (transaction != null) {
+//				transaction.rollback();
+//			}
+//			// Print the Exception
+//			ex.printStackTrace();
+//		} finally {
+//			// Close the EntityManager
+//			manager.close();
+//		}
+//	}
+//	
 	public void escrevePontoLeitura(pontoDeLeitura ponto) {
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction transaction = null;
@@ -108,7 +108,7 @@ public class DaoPontoLeitura {
 			transaction.begin();
 
 			// Get a List of Students
-			List<pontoDeLeitura> list= manager.createQuery("select c FROM pontoDeLeitura c",
+			pontoDeLeitura = manager.createQuery("select c FROM pontoDeLeitura c",
 					pontoDeLeitura.class).getResultList();
 
 			// Commit the transaction
@@ -270,11 +270,11 @@ public class DaoPontoLeitura {
 			}
 	}
 	public String imprimeTodoBanco(){
-		String imprime="====================================================";
+		String imprime="====================================================\n";
 		List<pontoDeLeitura> lista=readAll();
 		for(pontoDeLeitura i : lista){
 			imprime+=
-					"Codigo " +  i.getCodigo() +"\n"+
+					"Codigo ponto de Leitura:" +  i.getCodigo() +"\n"+
 							"PortaUsina  " +  i.isPortaUsina()+"\n"+
 							"MotorVacuo  " +  i.isMotorVacuo()+"\n"+
 							"MotorPressaoSkidA  " +  i.isMotorPressaoSkidA()+"\n"+
@@ -282,17 +282,17 @@ public class DaoPontoLeitura {
 							"MotorTransferenciaSkidA  " +  i.isMotorTransferenciaSkidA()+"\n"+
 							"MotorTransferenciaSkidB  " +  i.isMotorTransferenciaSkidB()+"\n"+
 							"Data  " +  i.getData()+"\n"
-							+ "___________________________________________________________";
+							+ "___________________________________________________________\n";
 		}
 
 		return imprime;
 	}
-	public boolean verificaAlteracaoDeEstadoDosMotores(pontoDeLeitura UltimoPonto){
+	public boolean gravaNoBancoVerificaAlteracaoDeEstado(pontoDeLeitura UltimoPonto){
 		pontoDeLeitura pontoDoBanco=lerUltimaLinha();
 		
 		System.out.println("Ponto do Banco:  "+pontoDoBanco.toStringThis()+"\n"
 				+ "Ponto gravar:  "+UltimoPonto.toStringThis());
-		
+		//grava no banco somente se o for diferente do ultimo registro
 		if(
 				pontoDoBanco.isMotorPressaoSkidA()      != UltimoPonto.isMotorPressaoSkidA() ||
 				pontoDoBanco.isMotorPressaoSkidB()      != UltimoPonto.isMotorPressaoSkidB() ||

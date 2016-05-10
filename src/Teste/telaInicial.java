@@ -2,7 +2,7 @@
  * Created by JFormDesigner on Tue Apr 19 00:13:39 BRT 2016
  */
 
-package Telas;
+package Teste;
 
 import java.awt.*;
 import java.awt.event.*;

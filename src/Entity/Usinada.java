@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -26,7 +27,7 @@ public class Usinada implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int codigo = 0;
 	
-	@OneToMany(mappedBy="usinada", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="usinada", fetch=FetchType.EAGER ,cascade=CascadeType.ALL)
 	private List<pontoDeLeitura> pontosDeLeituras; 
 	@Column(nullable=true)
 	private String status;
