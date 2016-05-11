@@ -33,6 +33,9 @@ public class TimerLeituraEGravacao {
 	              System.out.println(ler.LerDadosWeb());
 	              pontoDeLeitura ponto=ler.retornaPontoDeLeitura();
 	              ponto.setStatus(new controlaUsinada().verificaProcessosUsinada(ponto));
+	              // verifica qual operacao esta sendo realizada
+	              if (ponto.getStatus()=="vacuo")
+	              
 	              daoPontoLeitura.gravaNoBancoVerificaAlteracaoDeEstado(ponto);
 	              frame.verificaEstado(ponto);
 	       }

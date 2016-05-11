@@ -13,6 +13,7 @@ import Entity.pontoDeLeitura;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.awt.Toolkit;
 
 
 public class Historico extends JFrame {
@@ -35,6 +36,7 @@ public class Historico extends JFrame {
 	 * Create the frame.
 	 */
 	public Historico() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Historico.class.getResource("/IMG/MOTOR_LIGADO.png")));
 		setTitle("Relat\u00F3rio de Leituras");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 952, 678);

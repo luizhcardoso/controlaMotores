@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.mysql.jdbc.SocketMetadata;
+
 import Entity.pontoDeLeitura;
 
 public class controlaUsinada {
@@ -132,17 +134,10 @@ public class controlaUsinada {
 	}
 	
 	public String calculaDiferencaDeHoras(Date data1,Date data2){
-		String txt=null;   
+		Date txt=null; 
+		DateFormat somaDiferenca =null;
 		try{
 			      // constrói a primeira data
-			      DateFormat fm = new SimpleDateFormat(
-			        "dd/MM/yyyy HH:mm:ss");
-			      
-
-			      // constrói a segunda data
-			      fm = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-			      
-
 			      // vamos obter a diferença em semanas, dias, horas,
 			      // minutos e segundos
 			      long segundos = (data2.getTime() - 
@@ -156,17 +151,21 @@ public class controlaUsinada {
 			      int minutos = (int)Math.floor(segundos / 60);
 			      segundos -= minutos * 60;
 
-			      DateFormat somaDiferenca = new SimpleDateFormat("HH:mm:ss");
-			      Date dataFim = (Date)somaDiferenca.parse(horas+":"+minutos+":"+segundos);
+			      somaDiferenca = new SimpleDateFormat("HH:mm:ss");
+			      txt = (Date)somaDiferenca.parse(horas+":"+minutos+":"+segundos);
 			      
 			      // exibe o resultado
-			      txt=("As duas datas tem " +horas + " horas, " + minutos + " minutos e " +
-			        segundos + " segundos de diferença");
+//			      txt=(horas +":"+ minutos +":"+segundos);
 			    }
 			    catch(ParseException e){
 			      e.printStackTrace();
 			    }
-		   return txt;
+		   return formataData(txt);
+	}
+	
+	public String formataData(Date data){
+		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		 return fm.format(data);
 	}
 	
 	

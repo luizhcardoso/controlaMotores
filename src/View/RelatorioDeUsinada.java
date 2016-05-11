@@ -11,6 +11,7 @@ import BancoDeDados.DaoUsinada;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.Toolkit;
 
 
 public class RelatorioDeUsinada extends JFrame {
@@ -34,6 +35,7 @@ public class RelatorioDeUsinada extends JFrame {
 	 * Create the frame.
 	 */
 	public RelatorioDeUsinada() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(RelatorioDeUsinada.class.getResource("/IMG/MOTOR_LIGADO.png")));
 		setTitle("Relat\u00F3rio de Leituras");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
 		setBounds(100, 100, 952, 678);

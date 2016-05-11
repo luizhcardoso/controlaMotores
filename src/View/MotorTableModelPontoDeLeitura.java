@@ -1,17 +1,20 @@
 package View;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
+import Controler.controlaUsinada;
 import Entity.pontoDeLeitura;
 
 public class MotorTableModelPontoDeLeitura extends AbstractTableModel {
 
 	private List<pontoDeLeitura> linhas;
 	private String[] colunas = new String[]{
-			"Codigo","Descricao","Horario","Estado Motor1","Estado Motor2","Estado Motor3","Estado Motor4","Estado Motor5","Porta Usina"};
+			"Codigo","Descricao","Horario","Duracao","Estado Motor1","Estado Motor2","Estado Motor3","Estado Motor4","Estado Motor5","Porta Usina"};
 
 
 	public MotorTableModelPontoDeLeitura() {
@@ -60,6 +63,8 @@ public class MotorTableModelPontoDeLeitura extends AbstractTableModel {
 		case 7:
 			return String.class;
 		case 8:
+			return String.class;
+		case 9:
 			return String.class;
 		default:
 
@@ -129,16 +134,24 @@ public class MotorTableModelPontoDeLeitura extends AbstractTableModel {
 		case 2:
 			return dados.getData();
 		case 3:
-			return dados.isMotorPressaoSkidA();
+			if(rowIndex!=(linhas.size()-1)){
+				
+				return ((new controlaUsinada().calculaDiferencaDeHoras(linhas.get(rowIndex).getData(), linhas.get(rowIndex+1).getData())));
+				
+			}else{
+				return "~ Não Estimado ~";
+			}
 		case 4:
-			return dados.isMotorPressaoSkidB();
+			return dados.isMotorPressaoSkidA();
 		case 5:
-			return dados.isMotorTransferenciaSkidA();
+			return dados.isMotorPressaoSkidB();
 		case 6:
-			return dados.isMotorTransferenciaSkidB();
+			return dados.isMotorTransferenciaSkidA();
 		case 7:
-			return dados.isMotorVacuo();
+			return dados.isMotorTransferenciaSkidB();
 		case 8:
+			return dados.isMotorVacuo();
+		case 9:
 			return dados.isPortaUsina();
 		
 		default:
