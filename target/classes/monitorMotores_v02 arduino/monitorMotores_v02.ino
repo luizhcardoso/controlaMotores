@@ -48,6 +48,10 @@ void setup () {
   }
     
 static word homePage() {
+
+//colocar aqui bounce botao 
+
+
 char tmp[25] = "Pot Voltage = ";
   bfill = ether.tcpOffset();
   bfill.emit_p(PSTR(
@@ -71,6 +75,7 @@ char tmp[25] = "Pot Voltage = ";
     digitalRead(VACUO),
     digitalRead(PORTAUSINA),
     digitalRead(EstadoArduino));
+    wdt_reset(); 
     return bfill.position();
 }
 
@@ -80,7 +85,7 @@ void loop () {
   word pos = ether.packetLoop(len);
   if (pos)  // check if valid tcp data is received
     ether.httpServerReply(homePage()); // send web page data
-	wdt_reset(); 
+	
 
 }
 
