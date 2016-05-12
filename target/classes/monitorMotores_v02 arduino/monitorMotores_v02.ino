@@ -8,6 +8,7 @@ const int TransfB = 5;
 const int VACUO = 6;
 const int PORTAUSINA = 7;
 const int EstadoArduino = 9;
+bool last;
 
 // ethernet interface mac address, must be unique on the LAN
 static byte mymac[] = { 0x74,0x69,0x69,0x2D,0x30,0x31 };
@@ -39,7 +40,7 @@ void setup () {
   digitalWrite(TransfA, LOW);
   digitalWrite(TransfB, LOW);
   digitalWrite(VACUO, LOW);
-  digitalWrite(PORTAUSINA, LOW);
+  digitalWrite(PORTAUSINA, HIGH);
   digitalWrite(EstadoArduino, HIGH);
 
   wdt_enable(WDTO_8S);
@@ -79,6 +80,8 @@ void loop () {
   word pos = ether.packetLoop(len);
   if (pos)  // check if valid tcp data is received
     ether.httpServerReply(homePage()); // send web page data
+	wdt_reset(); 
+
 }
 
 

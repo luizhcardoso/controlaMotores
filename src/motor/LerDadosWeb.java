@@ -38,7 +38,7 @@ public class LerDadosWeb {
 					};
 				}
 			};
-			URL url = new URI(enderecoLocalTeste).toURL();
+			URL url = new URI(endereco).toURL();
 			URLConnection conn = url.openConnection();
 			Reader rd = new InputStreamReader(conn.getInputStream());
 			EditorKit kit = new HTMLEditorKit();

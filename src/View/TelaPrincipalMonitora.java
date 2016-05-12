@@ -148,7 +148,7 @@ public class TelaPrincipalMonitora extends JFrame{
 		panel.add(lblEstadoDaPorta);
 		
 		 label_13 = new JLabel("New label");
-		 label_13.setEnabled(false);
+		 label_13.setEnabled(true);
 		label_13.setBackground(Color.WHITE);
 		label_13.setIcon(new ImageIcon(TelaPrincipalMonitora.class.getResource("/IMG/PORTA_ABERTA.png")));
 		label_13.setBounds(935, 295, 47, 44);
@@ -172,7 +172,7 @@ public class TelaPrincipalMonitora extends JFrame{
 		JLabel label_4 = new JLabel("");
 		label_4.setBounds(32, 65, 1179, 850);
 		panel.add(label_4);
-		label_4.setIcon(new ImageIcon("C:\\Users\\LUIZAO\\workspace\\MonitoraMotores\\resources\\IMG\\usina2.png"));
+		label_4.setIcon(new ImageIcon((TelaPrincipalMonitora.class.getResource("/IMG/usina2.png"))));
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -281,6 +281,7 @@ public class TelaPrincipalMonitora extends JFrame{
 			lblMotorVacuo.repaint();
 		}
 		if(ponto.isPortaUsina()){
+			
 			label_13.setIcon(new ImageIcon(TelaPrincipalMonitora.class.getResource("/IMG/PORTA_ABERTA.png")));
 			label_13.setEnabled(true);
 			label_13.repaint();
@@ -291,9 +292,11 @@ public class TelaPrincipalMonitora extends JFrame{
 			label_13.setIcon(new ImageIcon(TelaPrincipalMonitora.class.getResource("/IMG/PORTA_FECHADA.png")));
 			lblEstadoDaPorta.setText("PORTA_FECHADA");
 			label_13.repaint();
-			label_13.setEnabled(false);
-			lblEstadoDaPorta.setEnabled(false);
+			label_13.setEnabled(true);
+			lblEstadoDaPorta.setEnabled(true);
 			lblEstadoDaPorta.repaint();
+			
+		
 		}
 		lblUltimaLeituraGravada.setText("Ultima Leitura Gravada : "+ new controlaUsinada().formataData(ponto.getData()));
 		lblUltimaLeituraGravada.repaint();

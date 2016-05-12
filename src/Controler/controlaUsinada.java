@@ -133,7 +133,7 @@ public class controlaUsinada {
 
 	}
 	
-	public String calculaDiferencaDeHoras(Date data1,Date data2){
+	public Date calculaDiferencaDeHoras(Date data1,Date data2){
 		Date txt=null; 
 		DateFormat somaDiferenca =null;
 		try{
@@ -160,13 +160,18 @@ public class controlaUsinada {
 			    catch(ParseException e){
 			      e.printStackTrace();
 			    }
-		   return formataData(txt);
+		   return txt;
 	}
 	
 	public String formataData(Date data){
 		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		 return fm.format(data);
 	}
+	public String formataHoraMinutosSegundos(Date data){
+		SimpleDateFormat fm = new SimpleDateFormat("HH:mm:ss");
+		 return fm.format(data);
+	}
+	
 	
 	
 }

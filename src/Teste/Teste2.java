@@ -11,7 +11,7 @@ import Entity.pontoDeLeitura;
 public class Teste2 {
 	public static void main(String[] args) {
 		controlaUsinada control=new controlaUsinada();
-		System.out.println(control.calculaDiferencaDeHoras());
+//		System.out.println(control.calculaDiferencaDeHoras());
 		
 	}
 

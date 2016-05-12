@@ -3,6 +3,7 @@ package View;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
@@ -14,9 +15,7 @@ public class MotorTableModelPontoDeLeitura extends AbstractTableModel {
 
 	private List<pontoDeLeitura> linhas;
 	private String[] colunas = new String[]{
-			"Codigo","Descricao","Horario","Duracao","Estado Motor1","Estado Motor2","Estado Motor3","Estado Motor4","Estado Motor5","Porta Usina"};
-
-
+			"Codigo","Descricao","Horario Inicial","Duracao","PressaoSkidA","PressaoSkidB","TransferenciaSkidA","TransferenciaSkidB","Vacuo","Porta Usina"};
 	public MotorTableModelPontoDeLeitura() {
 		linhas = new ArrayList<pontoDeLeitura>();
 		
@@ -123,6 +122,7 @@ public class MotorTableModelPontoDeLeitura extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
+		controlaUsinada controle=new controlaUsinada();
 		pontoDeLeitura dados = new pontoDeLeitura();
 		dados=linhas.get(rowIndex);
 
@@ -132,11 +132,11 @@ public class MotorTableModelPontoDeLeitura extends AbstractTableModel {
 		case 1:
 			return dados.getStatus();
 		case 2:
-			return dados.getData();
+			return controle.formataData(dados.getData());
 		case 3:
 			if(rowIndex!=(linhas.size()-1)){
 				
-				return ((new controlaUsinada().calculaDiferencaDeHoras(linhas.get(rowIndex).getData(), linhas.get(rowIndex+1).getData())));
+				return controle.formataHoraMinutosSegundos((controle.calculaDiferencaDeHoras(linhas.get(rowIndex).getData(), linhas.get(rowIndex+1).getData())));
 				
 			}else{
 				return "~ Não Estimado ~";

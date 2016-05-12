@@ -22,8 +22,7 @@ public class TimerLeituraEGravacao {
 	        timer.schedule(new RemindTask(),
 	                       0,        //initial delay
 	                       10*1000);  //subsequent rate
-	        
-	         }
+	     }
 
 	    class RemindTask extends TimerTask {
 	        
@@ -34,8 +33,7 @@ public class TimerLeituraEGravacao {
 	              pontoDeLeitura ponto=ler.retornaPontoDeLeitura();
 	              ponto.setStatus(new controlaUsinada().verificaProcessosUsinada(ponto));
 	              // verifica qual operacao esta sendo realizada
-	              if (ponto.getStatus()=="vacuo")
-	              
+	                   
 	              daoPontoLeitura.gravaNoBancoVerificaAlteracaoDeEstado(ponto);
 	              frame.verificaEstado(ponto);
 	       }

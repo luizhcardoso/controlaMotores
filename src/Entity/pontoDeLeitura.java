@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
+import Controler.controlaUsinada;
+
 
 @Entity
 @Table
@@ -17,8 +19,8 @@ public class pontoDeLeitura implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int codigo = 0;
 	
-	public pontoDeLeitura(Date data, boolean motorPressaoSkidA, boolean motorPressaoSkidB, boolean motorVacuo,
-			boolean motorTransferenciaSkidA, boolean motorTransferenciaSkidB, boolean portaUsina) {
+	public pontoDeLeitura(Date data, boolean motorPressaoSkidA, boolean motorPressaoSkidB,
+			boolean motorTransferenciaSkidA , boolean motorTransferenciaSkidB,boolean motorVacuo, boolean portaUsina) {
 		super();
 		this.data = data;
 		this.motorPressaoSkidA = motorPressaoSkidA;
@@ -29,8 +31,8 @@ public class pontoDeLeitura implements Serializable {
 		this.portaUsina = portaUsina;
 	}
 	public pontoDeLeitura(int codigo, Date data, boolean motorPressaoSkidA,
-			boolean motorPressaoSkidB, boolean motorVacuo, boolean motorTransferenciaSkidA,
-			boolean motorTransferenciaSkidB, boolean portaUsina, String status) {
+			boolean motorPressaoSkidB,  boolean motorTransferenciaSkidA, 
+			boolean motorTransferenciaSkidB,boolean motorVacuo, boolean portaUsina, String status) {
 		super();
 		this.codigo = codigo;
 		this.data = data;
@@ -160,7 +162,7 @@ public class pontoDeLeitura implements Serializable {
 					+ "TRASNF B    = " + isMotorTransferenciaSkidB()+"\n"
 					+ "VACUO       = " + isMotorVacuo()+"\n"
 					+ "PORTA USINA = " + isPortaUsina()+"\n"
-					+ "DATA        = " + getData()+"\n"
+					+ "DATA        = " + new controlaUsinada().formataData(getData())+"\n"
 					+ "Status        = " + getStatus()+"\n"
 							+ "-------------------------------\n");
 		
