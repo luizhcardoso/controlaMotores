@@ -8,10 +8,7 @@ import java.awt.Panel;
 import javax.swing.ImageIcon;
 import java.awt.Component;
 import javax.swing.border.EmptyBorder;
-
 import Entity.pontoDeLeitura;
-import Teste.telaInicial;
-
 import java.awt.Color;
 import java.awt.SystemColor;
 import javax.swing.JMenuBar;
@@ -288,6 +285,7 @@ public class TelaPrincipalMonitora extends JFrame{
 			lblEstadoDaPorta.setText("PORTA_ABERTA");
 			lblEstadoDaPorta.setEnabled(true);
 			lblEstadoDaPorta.repaint();
+			
 		}else{
 			label_13.setIcon(new ImageIcon(TelaPrincipalMonitora.class.getResource("/IMG/PORTA_FECHADA.png")));
 			lblEstadoDaPorta.setText("PORTA_FECHADA");
@@ -295,7 +293,7 @@ public class TelaPrincipalMonitora extends JFrame{
 			label_13.setEnabled(true);
 			lblEstadoDaPorta.setEnabled(true);
 			lblEstadoDaPorta.repaint();
-			
+					
 		
 		}
 		lblUltimaLeituraGravada.setText("Ultima Leitura Gravada : "+ new controlaUsinada().formataData(ponto.getData()));

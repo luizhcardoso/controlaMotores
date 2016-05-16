@@ -30,7 +30,7 @@ public class pontoDeLeitura implements Serializable {
 		this.motorTransferenciaSkidB = motorTransferenciaSkidB;
 		this.portaUsina = portaUsina;
 	}
-	public pontoDeLeitura(int codigo, Date data, boolean motorPressaoSkidA,
+	public pontoDeLeitura( Date data, boolean motorPressaoSkidA,
 			boolean motorPressaoSkidB,  boolean motorTransferenciaSkidA, 
 			boolean motorTransferenciaSkidB,boolean motorVacuo, boolean portaUsina, String status) {
 		super();

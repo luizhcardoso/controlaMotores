@@ -10,9 +10,18 @@ import Entity.pontoDeLeitura;
 
 public class Teste2 {
 	public static void main(String[] args) {
-		controlaUsinada control=new controlaUsinada();
-//		System.out.println(control.calculaDiferencaDeHoras());
+
+		String a=new String("heloo");
 		
+		System.out.println(a);
+		
+		a=null;
+		
+		System.out.println(a);
+		
+		a=new String("nova");
+		
+		System.out.println(a);
 	}
 
 }

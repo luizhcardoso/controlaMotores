@@ -139,7 +139,9 @@ public class MotorTableModelPontoDeLeitura extends AbstractTableModel {
 				return controle.formataHoraMinutosSegundos((controle.calculaDiferencaDeHoras(linhas.get(rowIndex).getData(), linhas.get(rowIndex+1).getData())));
 				
 			}else{
-				return "~ Não Estimado ~";
+				return "~"+controle.formataHoraMinutosSegundos((
+						controle.calculaDiferencaDeHoras(
+								linhas.get(rowIndex).getData(),new Date())))+"~";
 			}
 		case 4:
 			return dados.isMotorPressaoSkidA();

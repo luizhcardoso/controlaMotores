@@ -52,9 +52,6 @@ public class Usinada implements Serializable {
 	public int getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
 	public void setPontosDeLeituras(List<pontoDeLeitura> pontosDeLeituras) {
 		this.pontosDeLeituras = pontosDeLeituras;
 	}

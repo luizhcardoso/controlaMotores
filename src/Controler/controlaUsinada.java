@@ -7,39 +7,88 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.mysql.jdbc.SocketMetadata;
-
 import Entity.pontoDeLeitura;
 
 public class controlaUsinada {
 
+	public pontoDeLeitura getAberturaDePorta() {
+		return AberturaDePorta;
+	}
+
+	public void setAberturaDePorta(pontoDeLeitura aberturaDePorta) {
+		AberturaDePorta = aberturaDePorta;
+	}
+
+	public pontoDeLeitura getVacuoInicial() {
+		return vacuoInicial;
+	}
+
+	public void setVacuoInicial(pontoDeLeitura vacuoInicial) {
+		this.vacuoInicial = vacuoInicial;
+	}
+
+	public pontoDeLeitura getEnchimento() {
+		return enchimento;
+	}
+
+	public void setEnchimento(pontoDeLeitura enchimento) {
+		this.enchimento = enchimento;
+	}
+
+	public pontoDeLeitura getPressao() {
+		return pressao;
+	}
+
+	public void setPressao(pontoDeLeitura pressao) {
+		this.pressao = pressao;
+	}
+
+	public pontoDeLeitura getRetorno() {
+		return retorno;
+	}
+
+	public void setRetorno(pontoDeLeitura retorno) {
+		this.retorno = retorno;
+	}
+
+	public pontoDeLeitura getVacuoFinal() {
+		return vacuoFinal;
+	}
+
+	public void setVacuoFinal(pontoDeLeitura vacuoFinal) {
+		this.vacuoFinal = vacuoFinal;
+	}
+
+	public pontoDeLeitura getFechamentoDeporta() {
+		return FechamentoDeporta;
+	}
+
+	public void setFechamentoDeporta(pontoDeLeitura fechamentoDeporta) {
+		FechamentoDeporta = fechamentoDeporta;
+	}
+
+
 	private pontoDeLeitura AberturaDePorta;
-
 	private pontoDeLeitura vacuoInicial;
-
-	private pontoDeLeitura delay;
-
 	private pontoDeLeitura enchimento;
-
 	private pontoDeLeitura pressao;
-
 	private pontoDeLeitura retorno;
-
 	private pontoDeLeitura vacuoFinal;
-
 	private pontoDeLeitura FechamentoDeporta;
-
-	private String status;
+	private List<pontoDeLeitura> delay;
 
 	public String verificaProcessosUsinada(pontoDeLeitura ponto){
+		delay =new ArrayList<>();
+		
 		//verifica fecha porta
-		if(		FechamentoDeporta==null && 
+
+			if(		FechamentoDeporta==null && 
 				ponto.isMotorPressaoSkidA()==false &&
 				ponto.isMotorPressaoSkidB()==false &&
 				ponto.isMotorTransferenciaSkidA()==false &&
 				ponto.isMotorTransferenciaSkidB()==false &&
 				ponto.isMotorVacuo()==false &&
-				ponto.isPortaUsina()==true){
+				ponto.isPortaUsina()==false){
 			FechamentoDeporta=ponto;
 			return "FechamentoDeporta";
 		}else{//verifica delay
@@ -49,9 +98,9 @@ public class controlaUsinada {
 					ponto.isMotorTransferenciaSkidA()==false &&
 					ponto.isMotorTransferenciaSkidB()==false &&
 					ponto.isMotorVacuo()==false &&
-					ponto.isPortaUsina()==true){
+					ponto.isPortaUsina()==false){
 
-				delay=ponto;
+				delay.add(ponto);
 				return "delay";
 			}else{
 				//verifica vacuoInicial
@@ -61,7 +110,7 @@ public class controlaUsinada {
 						ponto.isMotorTransferenciaSkidA()==false &&
 						ponto.isMotorTransferenciaSkidB()==false &&
 						ponto.isMotorVacuo()==true &&
-						ponto.isPortaUsina()==true){
+						ponto.isPortaUsina()==false){
 					vacuoInicial=ponto;
 					return "vacuoInicial";
 				}else{
@@ -71,7 +120,7 @@ public class controlaUsinada {
 							ponto.isMotorTransferenciaSkidA()==true ||
 							ponto.isMotorTransferenciaSkidB()==true &&
 							ponto.isMotorVacuo()==false &&
-							ponto.isPortaUsina()==true){
+							ponto.isPortaUsina()==false){
 						enchimento=ponto;
 						return "enchimento";
 					}else{
@@ -82,7 +131,7 @@ public class controlaUsinada {
 								ponto.isMotorTransferenciaSkidA()==false &&
 								ponto.isMotorTransferenciaSkidB()==false &&
 								ponto.isMotorVacuo()==false &&
-								ponto.isPortaUsina()==true){
+								ponto.isPortaUsina()==false){
 							pressao=ponto;
 							return "pressao";
 						}else{
@@ -92,7 +141,7 @@ public class controlaUsinada {
 									ponto.isMotorTransferenciaSkidA()==true ||
 									ponto.isMotorTransferenciaSkidB()==true &&
 									ponto.isMotorVacuo()==false &&
-									ponto.isPortaUsina()==true){
+									ponto.isPortaUsina()==false){
 								retorno=ponto;
 								return "retorno";
 							}else{
@@ -103,9 +152,9 @@ public class controlaUsinada {
 										ponto.isMotorTransferenciaSkidA()==false &&
 										ponto.isMotorTransferenciaSkidB()==false &&
 										ponto.isMotorVacuo()==true &&
-										ponto.isPortaUsina()==true){
-									vacuoInicial=ponto;
-									return "vacuoInicial";
+										ponto.isPortaUsina()==false){
+									vacuoFinal=ponto;
+									return "vacuoFinal";
 									}else{
 										//verifica AberturaDePorta
 										if(		ponto.isMotorPressaoSkidA()==false &&
@@ -113,25 +162,26 @@ public class controlaUsinada {
 												ponto.isMotorTransferenciaSkidA()==false &&
 												ponto.isMotorTransferenciaSkidB()==false &&
 												ponto.isMotorVacuo()==false &&
-												ponto.isPortaUsina()==false){
+												ponto.isPortaUsina()==true){
 
 											AberturaDePorta=ponto;
-											return"(AberturaDePorta)";
+											return"AberturaDePorta";
 										}else{
+											delay.add(ponto);
 											return "null";
-										}
+										}}
 									}
 							}
 						}
 					}
 				}
 			}
-		}
+		}	
 		
 		
 		
 
-	}
+	
 	
 	public Date calculaDiferencaDeHoras(Date data1,Date data2){
 		Date txt=null; 
@@ -172,6 +222,21 @@ public class controlaUsinada {
 		 return fm.format(data);
 	}
 	
-	
+	public List<pontoDeLeitura> retornaListaDeLeituras(){
+		List<pontoDeLeitura> lista=new ArrayList<>();
+		
+		lista.add(getFechamentoDeporta());
+		lista.add(getVacuoInicial());
+		lista.add(getEnchimento());
+		lista.add(getPressao());
+		lista.add(getRetorno());
+		lista.add(getVacuoFinal());
+		lista.add(getAberturaDePorta());
+		for (pontoDeLeitura a : delay) {
+			lista.add(a);
+		}
+		
+		return lista;
+	}
 	
 }

@@ -18,6 +18,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.EditorKit;
 import javax.swing.text.html.HTMLEditorKit;
 
+import Controler.controlaUsinada;
 import Entity.pontoDeLeitura;
 
 public class LerDadosWeb {
@@ -97,6 +98,7 @@ public pontoDeLeitura retornaPontoDeLeitura(){
 				 converteBoolean(Integer.parseInt(array.get(7))), 
 				 converteBoolean(Integer.parseInt(array.get(9))), 
 				 converteBoolean(Integer.parseInt(array.get(11))));
+		 	     ponto.setStatus(new controlaUsinada().verificaProcessosUsinada(ponto));
 		 return ponto;
 	}
 

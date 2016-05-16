@@ -27,6 +27,7 @@ public class Historico extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JButton btnBuscar;
+	private JButton btnAtualizar;
 
 	/**
 	 * Launch the application.
@@ -59,6 +60,17 @@ public class Historico extends JFrame {
 		
 		panel_1 = new JPanel();
 		contentPane.add(panel_1, BorderLayout.NORTH);
+		
+		btnAtualizar = new JButton("Atualizar");
+		btnAtualizar.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent arg0) {
+			table1.removeAll();
+			table1.setModel(new MotorTableModelPontoDeLeitura(new DaoPontoLeitura().readAll()));
+			
+			}
+		});
+		panel_1.add(btnAtualizar);
 		
 		lblDataInicial = new JLabel("Data inicial: ");
 		panel_1.add(lblDataInicial);

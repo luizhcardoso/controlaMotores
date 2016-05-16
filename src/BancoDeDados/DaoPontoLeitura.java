@@ -300,7 +300,7 @@ public class DaoPontoLeitura {
 				pontoDoBanco.isMotorTransferenciaSkidB()!= UltimoPonto.isMotorTransferenciaSkidB()||
 				pontoDoBanco.isMotorVacuo()				!= UltimoPonto.isMotorVacuo()||
 				pontoDoBanco.isPortaUsina()				!= UltimoPonto.isPortaUsina()){
-			escrevePontoLeitura(UltimoPonto);
+				escrevePontoLeitura(UltimoPonto);  
 			System.out.println("Gravou no banco!");
 			return true;
 		}else{

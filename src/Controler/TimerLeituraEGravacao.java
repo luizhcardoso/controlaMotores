@@ -1,14 +1,9 @@
 package Controler;
 
-import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import javax.swing.JFrame;
-
 import BancoDeDados.DaoPontoLeitura;
 import Entity.pontoDeLeitura;
-import Teste.telaInicial;
 import View.TelaPrincipalMonitora;
 import motor.LerDadosWeb;
 
@@ -29,12 +24,11 @@ public class TimerLeituraEGravacao {
 	        public void run() {
 	              DaoPontoLeitura daoPontoLeitura=new DaoPontoLeitura();
 	              LerDadosWeb ler=new LerDadosWeb();
-	              System.out.println(ler.LerDadosWeb());
 	              pontoDeLeitura ponto=ler.retornaPontoDeLeitura();
-	              ponto.setStatus(new controlaUsinada().verificaProcessosUsinada(ponto));
+//	              ponto.setStatus(new controlaUsinada().verificaProcessosUsinada(ponto));
 	              // verifica qual operacao esta sendo realizada
-	                   
-	              daoPontoLeitura.gravaNoBancoVerificaAlteracaoDeEstado(ponto);
+	             daoPontoLeitura.escrevePontoLeitura(ponto);  
+	             	              
 	              frame.verificaEstado(ponto);
 	       }
 	        
