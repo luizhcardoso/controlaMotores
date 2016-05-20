@@ -11,62 +11,6 @@ import Entity.pontoDeLeitura;
 
 public class controlaUsinada {
 
-	public pontoDeLeitura getAberturaDePorta() {
-		return AberturaDePorta;
-	}
-
-	public void setAberturaDePorta(pontoDeLeitura aberturaDePorta) {
-		AberturaDePorta = aberturaDePorta;
-	}
-
-	public pontoDeLeitura getVacuoInicial() {
-		return vacuoInicial;
-	}
-
-	public void setVacuoInicial(pontoDeLeitura vacuoInicial) {
-		this.vacuoInicial = vacuoInicial;
-	}
-
-	public pontoDeLeitura getEnchimento() {
-		return enchimento;
-	}
-
-	public void setEnchimento(pontoDeLeitura enchimento) {
-		this.enchimento = enchimento;
-	}
-
-	public pontoDeLeitura getPressao() {
-		return pressao;
-	}
-
-	public void setPressao(pontoDeLeitura pressao) {
-		this.pressao = pressao;
-	}
-
-	public pontoDeLeitura getRetorno() {
-		return retorno;
-	}
-
-	public void setRetorno(pontoDeLeitura retorno) {
-		this.retorno = retorno;
-	}
-
-	public pontoDeLeitura getVacuoFinal() {
-		return vacuoFinal;
-	}
-
-	public void setVacuoFinal(pontoDeLeitura vacuoFinal) {
-		this.vacuoFinal = vacuoFinal;
-	}
-
-	public pontoDeLeitura getFechamentoDeporta() {
-		return FechamentoDeporta;
-	}
-
-	public void setFechamentoDeporta(pontoDeLeitura fechamentoDeporta) {
-		FechamentoDeporta = fechamentoDeporta;
-	}
-
 
 	private pontoDeLeitura AberturaDePorta;
 	private pontoDeLeitura vacuoInicial;
@@ -75,14 +19,14 @@ public class controlaUsinada {
 	private pontoDeLeitura retorno;
 	private pontoDeLeitura vacuoFinal;
 	private pontoDeLeitura FechamentoDeporta;
-	private List<pontoDeLeitura> delay;
+	private pontoDeLeitura delay;
+	private List<pontoDeLeitura> listaDeLeitura=new ArrayList<>();
 
-	public String verificaProcessosUsinada(pontoDeLeitura ponto){
-		delay =new ArrayList<>();
-		
+	public void verificaProcessosUsinada(pontoDeLeitura ponto){
+
 		//verifica fecha porta
 
-			if(		FechamentoDeporta==null && 
+		if(		FechamentoDeporta==null && 
 				ponto.isMotorPressaoSkidA()==false &&
 				ponto.isMotorPressaoSkidB()==false &&
 				ponto.isMotorTransferenciaSkidA()==false &&
@@ -90,153 +34,256 @@ public class controlaUsinada {
 				ponto.isMotorVacuo()==false &&
 				ponto.isPortaUsina()==false){
 			FechamentoDeporta=ponto;
+			listaDeLeitura.add(FechamentoDeporta);
+			
+		}//verifica delay
+		if(		FechamentoDeporta!=null &&
+				ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+			delay=ponto;
+			listaDeLeitura.add(delay);
+		
+		}
+		//verifica vacuoInicial
+		if(		vacuoInicial==null && 
+				ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==true &&
+				ponto.isPortaUsina()==false){
+			vacuoInicial=ponto;
+			listaDeLeitura.add(vacuoInicial);
+			
+		}
+		//verifica Enchimento
+		if(		enchimento==null && ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==true ||
+				ponto.isMotorTransferenciaSkidB()==true &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+			enchimento=ponto;
+			listaDeLeitura.add(enchimento);
+			
+		}
+
+		//verifica pressao
+		if(		ponto.isMotorPressaoSkidA()==true ||
+				ponto.isMotorPressaoSkidB()==true &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+			pressao=ponto;
+			listaDeLeitura.add(pressao);
+			
+		}
+		//verifica retorno
+		if(		enchimento!=null && ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==true ||
+				ponto.isMotorTransferenciaSkidB()==true &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+			retorno=ponto;
+			listaDeLeitura.add(retorno);
+			
+		}
+		//verifica vacuoFinal
+		if(		vacuoInicial!=null &&
+				ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==true &&
+				ponto.isPortaUsina()==false){
+			vacuoFinal=ponto;
+			listaDeLeitura.add(vacuoFinal);
+			
+		}
+		//verifica AberturaDePorta
+		if(		ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==true){
+
+			AberturaDePorta=ponto;
+			listaDeLeitura.add(AberturaDePorta);
+			
+		}
+		
+
+		
+	
+	}
+
+
+	public String getOperacao(pontoDeLeitura ponto){
+
+		//verifica fecha porta
+
+		if(		FechamentoDeporta==null && 
+				ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+
 			return "FechamentoDeporta";
-		}else{//verifica delay
-			if(		FechamentoDeporta!=null &&
-					ponto.isMotorPressaoSkidA()==false &&
-					ponto.isMotorPressaoSkidB()==false &&
-					ponto.isMotorTransferenciaSkidA()==false &&
-					ponto.isMotorTransferenciaSkidB()==false &&
-					ponto.isMotorVacuo()==false &&
-					ponto.isPortaUsina()==false){
+		}//verifica delay
+		if(		FechamentoDeporta!=null &&
+				ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+			return "delay";
+		}
+		//verifica vacuoInicial
+		if(		vacuoInicial==null && 
+				ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==true &&
+				ponto.isPortaUsina()==false){
+			return "vacuoInicial";
+		}
+		//verifica Enchimento
+		if(		enchimento==null && ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==true ||
+				ponto.isMotorTransferenciaSkidB()==true &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+			return "enchimento";
+		}
 
-				delay.add(ponto);
-				return "delay";
-			}else{
-				//verifica vacuoInicial
-				if(		vacuoInicial==null && 
-						ponto.isMotorPressaoSkidA()==false &&
-						ponto.isMotorPressaoSkidB()==false &&
-						ponto.isMotorTransferenciaSkidA()==false &&
-						ponto.isMotorTransferenciaSkidB()==false &&
-						ponto.isMotorVacuo()==true &&
-						ponto.isPortaUsina()==false){
-					vacuoInicial=ponto;
-					return "vacuoInicial";
-				}else{
-					//verifica Enchimento
-					if(		enchimento==null && ponto.isMotorPressaoSkidA()==false &&
-							ponto.isMotorPressaoSkidB()==false &&
-							ponto.isMotorTransferenciaSkidA()==true ||
-							ponto.isMotorTransferenciaSkidB()==true &&
-							ponto.isMotorVacuo()==false &&
-							ponto.isPortaUsina()==false){
-						enchimento=ponto;
-						return "enchimento";
-					}else{
+		//verifica pressao
+		if(		ponto.isMotorPressaoSkidA()==true ||
+				ponto.isMotorPressaoSkidB()==true &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+			return "pressao";
+		}
+		//verifica retorno
+		if(		enchimento!=null && ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==true ||
+				ponto.isMotorTransferenciaSkidB()==true &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==false){
+			return "retorno";
+		}
+		//verifica vacuoFinal
+		if(		vacuoInicial!=null &&
+				ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==true &&
+				ponto.isPortaUsina()==false){
+			return "vacuoFinal";
+		}
+		//verifica AberturaDePorta
+		if(		ponto.isMotorPressaoSkidA()==false &&
+				ponto.isMotorPressaoSkidB()==false &&
+				ponto.isMotorTransferenciaSkidA()==false &&
+				ponto.isMotorTransferenciaSkidB()==false &&
+				ponto.isMotorVacuo()==false &&
+				ponto.isPortaUsina()==true){
+			return"AberturaDePorta";
+		}
+		return "null";
+	}
 
-						//verifica pressao
-						if(		ponto.isMotorPressaoSkidA()==true ||
-								ponto.isMotorPressaoSkidB()==true &&
-								ponto.isMotorTransferenciaSkidA()==false &&
-								ponto.isMotorTransferenciaSkidB()==false &&
-								ponto.isMotorVacuo()==false &&
-								ponto.isPortaUsina()==false){
-							pressao=ponto;
-							return "pressao";
-						}else{
-							//verifica retorno
-							if(		enchimento!=null && ponto.isMotorPressaoSkidA()==false &&
-									ponto.isMotorPressaoSkidB()==false &&
-									ponto.isMotorTransferenciaSkidA()==true ||
-									ponto.isMotorTransferenciaSkidB()==true &&
-									ponto.isMotorVacuo()==false &&
-									ponto.isPortaUsina()==false){
-								retorno=ponto;
-								return "retorno";
-							}else{
-								//verifica vacuoFinal
-								if(		vacuoInicial!=null &&
-										ponto.isMotorPressaoSkidA()==false &&
-										ponto.isMotorPressaoSkidB()==false &&
-										ponto.isMotorTransferenciaSkidA()==false &&
-										ponto.isMotorTransferenciaSkidB()==false &&
-										ponto.isMotorVacuo()==true &&
-										ponto.isPortaUsina()==false){
-									vacuoFinal=ponto;
-									return "vacuoFinal";
-									}else{
-										//verifica AberturaDePorta
-										if(		ponto.isMotorPressaoSkidA()==false &&
-												ponto.isMotorPressaoSkidB()==false &&
-												ponto.isMotorTransferenciaSkidA()==false &&
-												ponto.isMotorTransferenciaSkidB()==false &&
-												ponto.isMotorVacuo()==false &&
-												ponto.isPortaUsina()==true){
+	public pontoDeLeitura getAberturaDePorta() {
+		return AberturaDePorta;
+	}
 
-											AberturaDePorta=ponto;
-											return"AberturaDePorta";
-										}else{
-											delay.add(ponto);
-											return "null";
-										}}
-									}
-							}
-						}
-					}
-				}
-			}
-		}	
-		
-		
-		
+	public pontoDeLeitura getVacuoInicial() {
+		return vacuoInicial;
+	}
 
-	
-	
+	public pontoDeLeitura getEnchimento() {
+		return enchimento;
+	}
+
+	public pontoDeLeitura getPressao() {
+		return pressao;
+	}
+
+	public pontoDeLeitura getRetorno() {
+		return retorno;
+	}
+
+	public pontoDeLeitura getVacuoFinal() {
+		return vacuoFinal;
+	}
+
+	public pontoDeLeitura getFechamentoDeporta() {
+		return FechamentoDeporta;
+	}
+	public pontoDeLeitura getDelay() {
+		return delay;
+	}
+
+	public List<pontoDeLeitura> getListaDeLeitura() {
+		return listaDeLeitura;
+	}
+
+
 	public Date calculaDiferencaDeHoras(Date data1,Date data2){
 		Date txt=null; 
 		DateFormat somaDiferenca =null;
 		try{
-			      // constrói a primeira data
-			      // vamos obter a diferença em semanas, dias, horas,
-			      // minutos e segundos
-			      long segundos = (data2.getTime() - 
-			        data1.getTime()) / 1000;
-//			      int semanas = (int)Math.floor(segundos / 604800);
-//			      segundos -= semanas * 604800;
-//			      int dias = (int)Math.floor(segundos / 86400);
-//			      segundos -= dias * 86400;
-			      int horas = (int)Math.floor(segundos / 3600);
-			      segundos -= horas * 3600;
-			      int minutos = (int)Math.floor(segundos / 60);
-			      segundos -= minutos * 60;
+			// constrói a primeira data
+			// vamos obter a diferença em semanas, dias, horas,
+			// minutos e segundos
+			long segundos = (data2.getTime() - 
+					data1.getTime()) / 1000;
+			//			      int semanas = (int)Math.floor(segundos / 604800);
+			//			      segundos -= semanas * 604800;
+			//			      int dias = (int)Math.floor(segundos / 86400);
+			//			      segundos -= dias * 86400;
+			int horas = (int)Math.floor(segundos / 3600);
+			segundos -= horas * 3600;
+			int minutos = (int)Math.floor(segundos / 60);
+			segundos -= minutos * 60;
 
-			      somaDiferenca = new SimpleDateFormat("HH:mm:ss");
-			      txt = (Date)somaDiferenca.parse(horas+":"+minutos+":"+segundos);
-			      
-			      // exibe o resultado
-//			      txt=(horas +":"+ minutos +":"+segundos);
-			    }
-			    catch(ParseException e){
-			      e.printStackTrace();
-			    }
-		   return txt;
+			somaDiferenca = new SimpleDateFormat("HH:mm:ss");
+			txt = (Date)somaDiferenca.parse(horas+":"+minutos+":"+segundos);
+
+			// exibe o resultado
+			//			      txt=(horas +":"+ minutos +":"+segundos);
+		}
+		catch(ParseException e){
+			e.printStackTrace();
+		}
+
+
+		return txt;
 	}
-	
+
 	public String formataData(Date data){
 		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-		 return fm.format(data);
+		return fm.format(data);
 	}
 	public String formataHoraMinutosSegundos(Date data){
 		SimpleDateFormat fm = new SimpleDateFormat("HH:mm:ss");
-		 return fm.format(data);
+		return fm.format(data);
 	}
-	
-	public List<pontoDeLeitura> retornaListaDeLeituras(){
-		List<pontoDeLeitura> lista=new ArrayList<>();
-		
-		lista.add(getFechamentoDeporta());
-		lista.add(getVacuoInicial());
-		lista.add(getEnchimento());
-		lista.add(getPressao());
-		lista.add(getRetorno());
-		lista.add(getVacuoFinal());
-		lista.add(getAberturaDePorta());
-		for (pontoDeLeitura a : delay) {
-			lista.add(a);
-		}
-		
-		return lista;
-	}
-	
+
+
 }

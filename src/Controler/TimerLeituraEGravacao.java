@@ -8,7 +8,7 @@ import View.TelaPrincipalMonitora;
 import motor.LerDadosWeb;
 
 public class TimerLeituraEGravacao {
-	
+		controlaUsinada controle=new controlaUsinada();
 	    Timer timer;
 	    static TelaPrincipalMonitora frame;
 	    public TimerLeituraEGravacao() {
@@ -25,10 +25,9 @@ public class TimerLeituraEGravacao {
 	              DaoPontoLeitura daoPontoLeitura=new DaoPontoLeitura();
 	              LerDadosWeb ler=new LerDadosWeb();
 	              pontoDeLeitura ponto=ler.retornaPontoDeLeitura();
-//	              ponto.setStatus(new controlaUsinada().verificaProcessosUsinada(ponto));
+	              
 	              // verifica qual operacao esta sendo realizada
-	             daoPontoLeitura.escrevePontoLeitura(ponto);  
-	             	              
+	              daoPontoLeitura.gravaNoBancoVerificaAlteracaoDeEstado(ponto);  
 	              frame.verificaEstado(ponto);
 	       }
 	        

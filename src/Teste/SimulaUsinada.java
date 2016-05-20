@@ -91,13 +91,13 @@ public class SimulaUsinada {
 	vacuoFinal.setUsinada(usin);
 	abreUsina.setUsinada(usin);
 	
-	desligado.setStatus(new controlaUsinada().verificaProcessosUsinada(desligado));
-	vacuoIncial.setStatus(new controlaUsinada().verificaProcessosUsinada(vacuoIncial));
-	enchimento.setStatus(new controlaUsinada().verificaProcessosUsinada(enchimento));
-	pressao.setStatus(new controlaUsinada().verificaProcessosUsinada(pressao));
-	retorno.setStatus(new controlaUsinada().verificaProcessosUsinada(retorno));
-	vacuoFinal.setStatus(new controlaUsinada().verificaProcessosUsinada(vacuoFinal));
-	abreUsina.setStatus(new controlaUsinada().verificaProcessosUsinada(abreUsina));
+	desligado.setStatus(new controlaUsinada().getOperacao(desligado));
+	vacuoIncial.setStatus(new controlaUsinada().getOperacao(vacuoIncial));
+	enchimento.setStatus(new controlaUsinada().getOperacao(enchimento));
+	pressao.setStatus(new controlaUsinada().getOperacao(pressao));
+	retorno.setStatus(new controlaUsinada().getOperacao(retorno));
+	vacuoFinal.setStatus(new controlaUsinada().getOperacao(vacuoFinal));
+	abreUsina.setStatus(new controlaUsinada().getOperacao(abreUsina));
 	
 	
 	List<pontoDeLeitura> array=new ArrayList<>();

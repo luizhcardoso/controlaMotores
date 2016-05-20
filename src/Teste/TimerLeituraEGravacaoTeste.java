@@ -12,7 +12,10 @@ import motor.LerDadosWeb;
 
 public class TimerLeituraEGravacaoTeste {
 	controlaUsinada controle;
-	Usinada usina;
+	Usinada usinada;
+	DaoUsinada daoUsina;
+	DaoPontoLeitura daoPonto;
+	int contador=0;
 	Timer timer;
 	static TelaPrincipalMonitora frame;
 	public TimerLeituraEGravacaoTeste() {
@@ -26,36 +29,39 @@ public class TimerLeituraEGravacaoTeste {
 	class RemindTask extends TimerTask {
 
 		public void run() {
-			//cria conexao bd
+			System.out.println(contador);
 			DaoPontoLeitura daoPontoLeitura=new DaoPontoLeitura();
-			//busca dados arduiono ip
-			LerDadosWeb ler=new LerDadosWeb(); 
-			//transforma leitura web em pt de leitura
+			LerDadosWeb ler=new LerDadosWeb();
 			pontoDeLeitura ponto=ler.retornaPontoDeLeitura();
+			frame.verificaEstado(ponto);
 
-			//se possuir alteracao 
-			if(controle==null){
-				System.out.println("instanciou variaveis");
+			if(controle==null || usinada==null){
+				daoUsina=new DaoUsinada();
 				controle=new controlaUsinada();
-				usina=new Usinada();
-			    frame.verificaEstado(ponto);
+				usinada=new Usinada();
+				daoUsina.escreveUsinada(usinada);
+				System.out.println("[Instanciou]");
 			}
-				if(daoPontoLeitura.gravaNoBancoVerificaAlteracaoDeEstado(ponto)){
-					frame.verificaEstado(ponto);
-					ponto.setUsinada(usina);
-					daoPontoLeitura.escrevePontoLeitura(ponto);
-					controle.verificaProcessosUsinada(ponto);
-				}
-				if(controle.getAberturaDePorta()!=null && 
-				   controle.getFechamentoDeporta()!=null){
-					usina.setPontosDeLeituras(controle.retornaListaDeLeituras());
-					DaoUsinada gravaUsinada=new DaoUsinada();
-					gravaUsinada.escreveUsinada(usina);
-					controle=null;
-				}
+			if(daoPontoLeitura.gravaNoBancoVerificaAlteracaoDeEstado(ponto)){
+			ponto.setStatus(controle.getOperacao(ponto));
+			ponto.setUsinada(usinada);
+			controle.verificaProcessosUsinada(ponto);
+			daoPontoLeitura=new DaoPontoLeitura();
+			daoPontoLeitura.escrevePontoLeitura(ponto);
+			System.out.println(ponto.toStringThis());
 			}
+			if(controle.getAberturaDePorta()!=null){ //aqui !
+				System.out.println("Entoru na pressa agora !");
+				contador=0;
+				usinada.setPontosDeLeituras(controle.getListaDeLeitura());
+				daoUsina.upate(usinada);
+				controle=null;
+				usinada=null;
+			}
+			contador++;
 
-		
+
+		}
 
 		public void stopTimer(){
 			timer.cancel();
@@ -63,10 +69,11 @@ public class TimerLeituraEGravacaoTeste {
 	}
 
 	public static void main(String args[]) {
-		System.out.println("======teste============");
+		System.out.println("[===========  teste ============[");
 		frame=new TelaPrincipalMonitora();
 		TimerLeituraEGravacaoTeste t= new TimerLeituraEGravacaoTeste();
-		controlaUsinada controle=new controlaUsinada();
+		frame.setVisible(true);
+		
 
 	}
 }

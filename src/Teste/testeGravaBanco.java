@@ -38,6 +38,7 @@ public class testeGravaBanco {
 				// Begin the transaction
 				transaction.begin();
 				// Create a new  object
+				Usinada usinada=new Usinada();
 				
 				pontoDeLeitura pt1=new pontoDeLeitura(new Date(),false,false,false,false,false,false);
 				pontoDeLeitura pt2=new pontoDeLeitura(new Date(),true,false,false,false,false,true);
@@ -48,19 +49,41 @@ public class testeGravaBanco {
 				pontoDeLeitura pt7=new pontoDeLeitura(new Date(),true,false,false,false,true,false);
 				pontoDeLeitura pt8=new pontoDeLeitura(new Date(),true,false,false,false,true,false);
 				
+				
+				
 				String status="ok";
+				
+				
+					
+				pt3.setUsinada(usinada);
+				pt4.setUsinada(usinada);
+				pt5.setUsinada(usinada);
+				pt6.setUsinada(usinada);
+				pt7.setUsinada(usinada);
+				
+				
+				DaoPontoLeitura pon=new DaoPontoLeitura();
+				manager.persist(pt3);
+				manager.persist(pt4);
+				manager.persist(pt5);
+				manager.persist(pt6);
+				manager.persist(pt7);
+				
+							
+				
+				
 				List<pontoDeLeitura> pt=new ArrayList<pontoDeLeitura>();
-				pt.add(pt1);
-				pt.add(pt2);
 				pt.add(pt3);
+				pt.add(pt4);
 				pt.add(pt5);
-				pt.add(pt8);
-				Usinada usinada=new Usinada(pt,"de");
-				Usinada usinada2=new Usinada(pt,"d");
-				Usinada usinada3=new Usinada(pt,"d");
-				manager.persist(usinada);	
-				manager.persist(usinada2);	
-				manager.persist(usinada3);	
+				
+				
+				
+				usinada.setPontosDeLeituras(pt);
+						
+				DaoUsinada usn=new DaoUsinada();
+				manager.persist(usinada);
+			
 			
 				// Save the object
 				transaction.commit();

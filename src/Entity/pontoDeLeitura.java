@@ -59,7 +59,7 @@ public class pontoDeLeitura implements Serializable {
 		this.usinada = usinada;
 	}
 
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="usinada")
 	private Usinada usinada; 
 	
@@ -151,6 +151,16 @@ public class pontoDeLeitura implements Serializable {
 	}
 
 	public void setPortaUsina(boolean portaUsina) {
+		this.portaUsina = portaUsina;
+	}
+	public void setPontoDeLeitura(Date data, boolean motorPressaoSkidA, boolean motorPressaoSkidB,
+			boolean motorTransferenciaSkidA , boolean motorTransferenciaSkidB,boolean motorVacuo, boolean portaUsina) {
+		this.data = data;
+		this.motorPressaoSkidA = motorPressaoSkidA;
+		this.motorPressaoSkidB = motorPressaoSkidB;
+		this.motorVacuo = motorVacuo;
+		this.motorTransferenciaSkidA = motorTransferenciaSkidA;
+		this.motorTransferenciaSkidB = motorTransferenciaSkidB;
 		this.portaUsina = portaUsina;
 	}
 	

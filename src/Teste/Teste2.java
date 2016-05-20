@@ -1,27 +1,22 @@
 package Teste;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
 
-import BancoDeDados.DaoUsinada;
-import Controler.controlaUsinada;
+import BancoDeDados.DaoPontoLeitura;
 import Entity.Usinada;
 import Entity.pontoDeLeitura;
 
 public class Teste2 {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 
-		String a=new String("heloo");
+		testePontoDeLeituraDAO dao=new testePontoDeLeituraDAO();
+		pontoDeLeitura ponto=new pontoDeLeitura();
+		DaoPontoLeitura pt=new DaoPontoLeitura();
+		ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,true);
+//		ArrayList<pontoDeLeitura> dao2=(ArrayList<pontoDeLeitura>) dao.readAll();
+		pt.escrevePontoLeitura(ponto);
 		
-		System.out.println(a);
-		
-		a=null;
-		
-		System.out.println(a);
-		
-		a=new String("nova");
-		
-		System.out.println(a);
 	}
 
 }

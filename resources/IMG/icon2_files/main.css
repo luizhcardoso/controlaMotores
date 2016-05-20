@@ -1,0 +1,140 @@
+* {
+	border: 0;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+}
+
+#AdvantageStage {
+	width: 100%;
+	height: 100%;
+
+	background-color: #2C2C2E;
+	background-image: url('https://adserver.adnexio.com/Content/Creative/img/amlogo.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+
+	box-sizing: border-box;
+    position: absolute;
+	overflow: hidden;
+	font-family: verdana, sans-serif;
+}
+
+#theBanner {
+	height: 100%;
+	width: 100%;
+	
+	z-index: 100;
+	
+	display: -webkit-flex;
+	
+	display: -ms-flexbox;
+	
+	display: flex;
+
+	position: absolute;
+	top:0px;
+	left: 0px;
+
+	box-sizing: border-box;
+	border: 1px solid black;
+	background-color: #fff;
+}
+
+/* INFO ICON */
+
+#infoWrapper {
+	position: absolute;
+	top: 1px;
+	right: 1px;
+
+	z-index: 101;
+
+	padding: 2px 2px 3px 3px ;
+
+	background-color: #3A3A3A;
+	border-radius: 0 0 0 3px;
+}
+
+#infoWrapper img {
+	width: 10px;
+	float: right;
+}
+
+#infoWrapper span {
+	display: none;
+	float: left;
+	font-size: 9px;
+	color:#fff;
+	max-width: 130px;
+	padding-right: 5px;
+	text-transform: uppercase;
+}
+
+#infoWrapper:hover span{
+	display: block;
+}
+
+/*Loader*/
+
+.loader {
+	position: absolute;
+	top:0px;
+	left: 0px;
+	z-index: 101;
+	height: 100%;
+	width: 100%;
+	background-color:#2C2C2E;
+	box-sizing: border-box;
+	border: 1px solid black;
+	display: -webkit-flex;
+	display: -moz-flexbox;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-justify-content: center;
+	-moz-flex-pack: center;
+	    -ms-flex-pack: center;
+	    justify-content: center;
+	-webkit-align-items: center;
+	-moz-flex-align: center;
+	    -ms-flex-align: center;
+	    align-items: center; 
+}
+
+.machine {
+  width: 60vmin;
+  fill: #fff; }
+
+.small-shadow, .medium-shadow, .large-shadow {
+  fill: rgba(0, 0, 0, 0.05); }
+
+.small {
+  -webkit-transform-origin: 100.136px 225.345px;
+          transform-origin: 100.136px 225.345px; }
+
+.small-shadow {
+  -webkit-transform-origin: 110.136px 235.345px;
+          transform-origin: 110.136px 235.345px; }
+
+.medium {
+	fill: #DDDD59;
+  -webkit-transform-origin: 254.675px 379.447px;
+          transform-origin: 254.675px 379.447px; }
+
+.medium-shadow {
+  -webkit-transform-origin: 264.675px 389.447px;
+          transform-origin: 264.675px 389.447px; }
+
+.large {
+  -webkit-transform-origin: 461.37px 173.694px;
+          transform-origin: 461.37px 173.694px; }
+
+.large-shadow {
+  -webkit-transform-origin: 471.37px 183.694px;
+          transform-origin: 471.37px 183.694px; }
+
+.advantageButton {
+    background-size:contain;
+    background-position: center center;
+}

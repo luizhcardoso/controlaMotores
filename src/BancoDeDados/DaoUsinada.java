@@ -219,9 +219,7 @@ public class DaoUsinada implements Serializable {
 	 * @param name
 	 * @param age
 	 */
-	public void upate(int codigo, Date date, 
-			boolean pressaoSkidA, boolean pressaoSkidB, boolean transferenciaSkindA, 
-			boolean transferenciaSkidB, boolean vacuo, boolean portaUsina) { {
+	public void upate(Usinada usinada) { {
 				// Create an EntityManager
 				EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
 				EntityTransaction transaction = null;
@@ -233,20 +231,12 @@ public class DaoUsinada implements Serializable {
 					transaction.begin();
 
 					// Get the Student object
-					pontoDeLeitura pt = manager.find(pontoDeLeitura.class, codigo);
+					Usinada pt = manager.find(Usinada.class,usinada.getCodigo());
 
 					// Change the values
 
-					pt.setPortaUsina(portaUsina);
-					pt.setMotorVacuo(vacuo);
-					pt.setMotorPressaoSkidA(pressaoSkidA);
-					pt.setMotorPressaoSkidB(pressaoSkidB);
-					pt.setMotorTransferenciaSkidA(transferenciaSkindA);
-					pt.setMotorTransferenciaSkidB(transferenciaSkidB);
-					pt.setData(date);
-
 					// Update the student
-					manager.persist(pt);
+					manager.merge(pt);
 
 					// Commit the transaction
 					transaction.commit();

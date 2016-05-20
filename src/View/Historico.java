@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import BancoDeDados.DaoPontoLeitura;
 import BancoDeDados.DaoUsinada;
 import Entity.pontoDeLeitura;
+import Teste.renderTable;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -53,8 +54,14 @@ public class Historico extends JFrame {
 		panel.add(scrollPane);
 		//cria modelo de tabela para tabela
 		MotorTableModelPontoDeLeitura table=new MotorTableModelPontoDeLeitura(new DaoPontoLeitura().readAll());
+		
 		table1 = new JTable();
+		table1.setDefaultRenderer(Object.class, new renderTable());
 		table1.setModel(table);
+	
+
+
+		
 		
 		scrollPane.setViewportView(table1);
 		

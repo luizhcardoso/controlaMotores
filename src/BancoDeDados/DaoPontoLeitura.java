@@ -14,52 +14,13 @@ import javax.persistence.EntityManagerFactory;
 
 public class DaoPontoLeitura {
 
-
 	// Create an EntityManagerFactory when you start the application.
 	private static final EntityManagerFactory ENTITY_MANAGER_FACTORY = Persistence
 			.createEntityManagerFactory("motor");
+	
+	
 
-//	public void escrevePontoLeitura(Date date, 
-//			boolean pressaoSkidA, boolean pressaoSkidB, boolean transferenciaSkindA, 
-//			boolean transferenciaSkidB, boolean vacuo, boolean portaUsina) {
-//		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
-//		EntityTransaction transaction = null;
-//
-//		try {
-//
-//			// Get a transaction
-//			transaction = manager.getTransaction();
-//
-//			// Begin the transaction
-//			transaction.begin();
-//			// Create a new  object
-//			pontoDeLeitura pt = new pontoDeLeitura();
-//			pt.setPortaUsina(portaUsina);
-//			pt.setMotorVacuo(vacuo);
-//			pt.setMotorPressaoSkidA(pressaoSkidA);
-//			pt.setMotorPressaoSkidB(pressaoSkidB);
-//			pt.setMotorTransferenciaSkidA(transferenciaSkindA);
-//			pt.setMotorTransferenciaSkidB(transferenciaSkidB);
-//			pt.setData(date);
-//
-//			// Save the student object
-//			manager.persist(pt);
-//			System.out.println("gravou");
-//			// Commit the transaction
-//			transaction.commit();
-//		} catch (Exception ex) {
-//			// If there are any exceptions, roll back the changes
-//			if (transaction != null) {
-//				transaction.rollback();
-//			}
-//			// Print the Exception
-//			ex.printStackTrace();
-//		} finally {
-//			// Close the EntityManager
-//			manager.close();
-//		}
-//	}
-//	
+
 	public void escrevePontoLeitura(pontoDeLeitura ponto) {
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction transaction = null;
@@ -71,7 +32,7 @@ public class DaoPontoLeitura {
 
 			// Begin the transaction
 			transaction.begin();
-			manager.persist(ponto);
+			manager. merge(ponto);
 			System.out.println("gravou");
 			// Commit the transaction
 			transaction.commit();
@@ -93,33 +54,32 @@ public class DaoPontoLeitura {
 	 * 
 	 * @return a List of Students
 	 */
-	public List readAll() {
+	public List<pontoDeLeitura> readAll() {
 
 		List<pontoDeLeitura> pontoDeLeitura = null;
 
 		// Create an EntityManager
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
-		EntityTransaction transaction = null;
+//		EntityTransaction transaction = null;
 
 		try {
 			// Get a transaction
-			transaction = manager.getTransaction();
+//			transaction = manager.getTransaction();
 			// Begin the transaction
-			transaction.begin();
+//			transaction.begin();
 
 			// Get a List of Students
-			pontoDeLeitura = manager.createQuery("select c FROM pontoDeLeitura c",
-					pontoDeLeitura.class).getResultList();
-
+			 Query query=manager.createQuery("select c FROM pontoDeLeitura c");
+			 pontoDeLeitura =query.getResultList();
 			// Commit the transaction
-			transaction.commit();
+//			transaction.commit();
 		} catch (Exception ex) {
 			// If there are any exceptions, roll back the changes
-			if (transaction != null) {
-				transaction.rollback();
-			}
+//			if (transaction != null) {
+//				transaction.rollback();
+//			}
 			// Print the Exception
-			ex.printStackTrace();
+//			ex.printStackTrace();
 		} finally {
 			// Close the EntityManager
 			manager.close();
@@ -165,11 +125,24 @@ public class DaoPontoLeitura {
 	public pontoDeLeitura lerUltimaLinha() {
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction transaction = null;
+		try{
 		Query query = manager.createQuery("from pontoDeLeitura where codigo=(select max(codigo) from pontoDeLeitura )");
 		query.setMaxResults(1);
 		pontoDeLeitura product = (pontoDeLeitura)query.getSingleResult();
 		return product;
-		      }
+		 } catch (Exception ex) {
+				// If there are any exceptions, roll back the changes
+				if (transaction != null) {
+					transaction.rollback();
+				}
+				// Print the Exception
+				ex.printStackTrace();
+			} finally {
+				// Close the EntityManager
+				manager.close();
+			}
+		return null;
+	}
 	
 	public List<pontoDeLeitura> lerUltimasLinha(int paginacao) {
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
@@ -288,8 +261,10 @@ public class DaoPontoLeitura {
 		return imprime;
 	}
 	public boolean gravaNoBancoVerificaAlteracaoDeEstado(pontoDeLeitura UltimoPonto){
-		pontoDeLeitura pontoDoBanco=lerUltimaLinha();
 		
+		try{
+			
+			pontoDeLeitura pontoDoBanco=lerUltimaLinha();
 		System.out.println("Ponto do Banco:  "+pontoDoBanco.toStringThis()+"\n"
 				+ "Ponto gravar:  "+UltimoPonto.toStringThis());
 		//grava no banco somente se o for diferente do ultimo registro
@@ -300,14 +275,25 @@ public class DaoPontoLeitura {
 				pontoDoBanco.isMotorTransferenciaSkidB()!= UltimoPonto.isMotorTransferenciaSkidB()||
 				pontoDoBanco.isMotorVacuo()				!= UltimoPonto.isMotorVacuo()||
 				pontoDoBanco.isPortaUsina()				!= UltimoPonto.isPortaUsina()){
-				escrevePontoLeitura(UltimoPonto);  
-			System.out.println("Gravou no banco!");
+//				escrevePontoLeitura(UltimoPonto);  
+			
 			return true;
 		}else{
-			System.out.println("Nao Gravou no banco!");
+			System.out.println("*Ponto de leitura Igual*");
 			return false;
 		}
+		}catch (Exception ex) {
+			// If there are any exceptions, roll back the changes
+		
+				escrevePontoLeitura(UltimoPonto);
+			
+			// Print the Exception
+			ex.printStackTrace();
+			return false;
+		} 
+		
+	}
 	}
 
 
-}
+
