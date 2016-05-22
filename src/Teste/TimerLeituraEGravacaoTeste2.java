@@ -9,6 +9,8 @@ import Controler.controlaUsinada;
 import Entity.Usinada;
 import Entity.pontoDeLeitura;
 import View.TelaPrincipalMonitora;
+import View.TelaPrincipalMonitora2;
+import motor.LerDadosWeb;
 
 
 public class TimerLeituraEGravacaoTeste2 {
@@ -18,13 +20,13 @@ public class TimerLeituraEGravacaoTeste2 {
 	DaoPontoLeitura daoPonto;
 	int contador=0;
 	Timer timer;
-	static TelaPrincipalMonitora frame;
+	static TelaPrincipalMonitora2 frame;
 	public TimerLeituraEGravacaoTeste2() {
 
 		timer = new Timer();
 		timer.schedule(new RemindTask(),
 				0,        //initial delay
-				1*1000);  //subsequent rate
+				19*1000);  //subsequent rate
 	}
 
 	class RemindTask extends TimerTask {
@@ -36,46 +38,46 @@ public class TimerLeituraEGravacaoTeste2 {
 		
 			System.out.println(contador);
 			DaoPontoLeitura daoPontoLeitura=new DaoPontoLeitura();
-//			DaoPontoLeitura daoPontoLeitura=new DaoPontoLeitura();
-//			LerDadosWeb ler=new LerDadosWeb();
-//			pontoDeLeitura ponto=ler.retornaPontoDeLeitura();
-//			frame.verificaEstado(ponto);
-//			data, PressaoSkidA, PressaoSkidB,	TrasferenciaSkidA , TransferenciaSkidB,Vacuo,portaUsina) 
-			pontoDeLeitura ponto=new pontoDeLeitura();
+
+			LerDadosWeb ler=new LerDadosWeb();
+			pontoDeLeitura ponto=ler.retornaPontoDeLeitura();
+
+ 
+//			pontoDeLeitura ponto=new pontoDeLeitura();
 			
-			if(contador==0){//fecha porta
-				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,false);
-			}
-			if(contador==1){// vacuo inicial
-				ponto.setPontoDeLeitura(new Date(),false,false,false,false,true,false);
-			}
-			if(contador==2){//  delay
-				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,false);
-			}
-			if(contador==3){//  delay
-				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,false);
-			}
-			if(contador==4){//  enchimento
-				ponto.setPontoDeLeitura(new Date(),false,false,true,false,false,false);
-			}
-			if(contador==5){//  pressao
-				ponto.setPontoDeLeitura(new Date(),true,false,false,false,false,false);
-			}
-			if(contador==6){//  pressao
-				ponto.setPontoDeLeitura(new Date(),true,false,false,false,false,false);
-			}
-			if(contador==7){//  retorno
-				ponto.setPontoDeLeitura(new Date(),false,false,true,false,false,false);
-			}
-			if(contador==8){// vacuo final
-				ponto.setPontoDeLeitura(new Date(),false,false,false,false,true,false);
-			}
-			if(contador==9){// abertura de porta
-				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,false);
-			}
-			if(contador>9){
-				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,true);
-			}
+//			if(contador==0){//fecha porta
+//				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,false);
+//			}
+//			if(contador==1){// vacuo inicial
+//				ponto.setPontoDeLeitura(new Date(),false,false,false,false,true,false);
+//			}
+//			if(contador==2){//  delay
+//				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,false);
+//			}
+//			if(contador==3){//  delay
+//				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,false);
+//			}
+//			if(contador==4){//  enchimento
+//				ponto.setPontoDeLeitura(new Date(),false,false,true,false,false,false);
+//			}
+//			if(contador==5){//  pressao
+//				ponto.setPontoDeLeitura(new Date(),true,false,false,false,false,false);
+//			}
+//			if(contador==6){//  pressao
+//				ponto.setPontoDeLeitura(new Date(),true,false,false,false,false,false);
+//			}
+//			if(contador==7){//  retorno
+//				ponto.setPontoDeLeitura(new Date(),false,false,true,false,false,false);
+//			}
+//			if(contador==8){// vacuo final
+//				ponto.setPontoDeLeitura(new Date(),false,false,false,false,true,false);
+//			}
+//			if(contador==9){// abertura de porta
+//				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,false);
+//			}
+//			if(contador>9){
+//				ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,true);
+//			}
 			
 			frame.verificaEstado(ponto);
 			
@@ -86,12 +88,14 @@ public class TimerLeituraEGravacaoTeste2 {
 				daoUsina.escreveUsinada(usinada);
 				System.out.println("[Instanciou]");
 			}
+				if(daoPontoLeitura.gravaNoBancoVerificaAlteracaoDeEstado(ponto)==true){
 				ponto.setStatus(controle.getOperacao(ponto));
 				ponto.setUsinada(usinada);
 				controle.verificaProcessosUsinada(ponto);
 				daoPontoLeitura=new DaoPontoLeitura();
-					daoPontoLeitura.escrevePontoLeitura(ponto);
-				  
+				daoPontoLeitura.escrevePontoLeitura(ponto);
+				frame.atualizaTabeleBanco();
+				}
 				
 				if(controle.getAberturaDePorta()!=null){ //aqui !
 					System.out.println("Entoru na pressa agora !");
@@ -115,7 +119,7 @@ public class TimerLeituraEGravacaoTeste2 {
 
 
 	public static void main(String args[]) {
-		frame=new TelaPrincipalMonitora();
+		frame=new TelaPrincipalMonitora2();
 		frame.setVisible(true);
 		TimerLeituraEGravacaoTeste2 t= new TimerLeituraEGravacaoTeste2();
 

@@ -1,22 +1,47 @@
 package Teste;
 
-import java.util.ArrayList;
-import java.util.Date;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.text.MaskFormatter;
+import java.text.ParseException;
 
-import BancoDeDados.DaoPontoLeitura;
-import Entity.Usinada;
-import Entity.pontoDeLeitura;
+public class Teste2 extends JFrame {
 
-public class Teste2 {
-	public static void main(String[] args) throws Exception {
 
-		testePontoDeLeituraDAO dao=new testePontoDeLeituraDAO();
-		pontoDeLeitura ponto=new pontoDeLeitura();
-		DaoPontoLeitura pt=new DaoPontoLeitura();
-		ponto.setPontoDeLeitura(new Date(),false,false,false,false,false,true);
-//		ArrayList<pontoDeLeitura> dao2=(ArrayList<pontoDeLeitura>) dao.readAll();
-		pt.escrevePontoLeitura(ponto);
-		
+	public Teste2 ()
+	{ 
+
+		Container c = getContentPane();
+
+		MaskFormatter formater = new MaskFormatter();
+		JFormattedTextField field = new JFormattedTextField();
+		field.setColumns(8);
+
+		try {
+			formater.setMask("##/##/####");
+			formater.install(field);
+		} 
+		catch (ParseException pe) {
+			pe.printStackTrace();
+		}
+		catch ( Exception ex ) {
+			// process remaining Exceptions here
+			ex.printStackTrace();
+
+		}
+		JPanel panel = new JPanel();
+		panel.setLayout(new FlowLayout());
+		panel.add(field);
+		c.setLayout(new BorderLayout());
+		c.add(panel,BorderLayout.CENTER);
+
+		setSize(500,500);
+		show();
+
+
+	}
+	public static void main(String[] args) {
+		new Teste2();
 	}
 
 }

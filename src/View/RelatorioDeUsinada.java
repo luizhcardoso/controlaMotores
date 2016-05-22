@@ -8,10 +8,13 @@ import javax.swing.border.EmptyBorder;
 
 import BancoDeDados.DaoPontoLeitura;
 import BancoDeDados.DaoUsinada;
+import viewModeloTabelas.MotorTableModelPontoDeLeitura;
+import viewModeloTabelas.MotorTableModelUsinada;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Toolkit;
+import java.awt.Dimension;
 
 
 public class RelatorioDeUsinada extends JFrame {
@@ -26,6 +29,7 @@ public class RelatorioDeUsinada extends JFrame {
 	private JTextField textField_1;
 	private JButton btnBuscar;
 	private Historico historico;
+	private JPanel panel_2;
 
 	/**
 	 * Launch the application.
@@ -38,7 +42,7 @@ public class RelatorioDeUsinada extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RelatorioDeUsinada.class.getResource("/IMG/MOTOR_LIGADO.png")));
 		setTitle("Relat\u00F3rio de Leituras");
 		setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-		setBounds(100, 100, 952, 678);
+		setBounds(100, 100, 1160, 688);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -48,10 +52,15 @@ public class RelatorioDeUsinada extends JFrame {
 		panel.setLayout(new BorderLayout(0, 0));
 		
 		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setMinimumSize(new Dimension(0, 32));
+		scrollPane.setPreferredSize(new Dimension(440, 2));
 		panel.add(scrollPane);
 		//cria modelo de tabela para tabela
-		MotorTableModelUsinada table=new MotorTableModelUsinada(new DaoUsinada().retornaTodoBanco());
+		MotorTableModelUsinada table=new MotorTableModelUsinada(new DaoUsinada().readAll());
 		table1 = new JTable();
+		table1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		
+		
 		table1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
@@ -62,6 +71,10 @@ public class RelatorioDeUsinada extends JFrame {
 			}
 		});
 		table1.setModel(table);
+		table1.getColumnModel().getColumn(0).setPreferredWidth(70);
+		table1.getColumnModel().getColumn(1).setPreferredWidth(100);
+		table1.getColumnModel().getColumn(2).setPreferredWidth(90);
+		table1.getColumnModel().getColumn(3).setPreferredWidth(200);
 		
 		scrollPane.setViewportView(table1);
 		
@@ -94,7 +107,19 @@ public class RelatorioDeUsinada extends JFrame {
 		});
 		panel_1.add(btnBuscar);
 		
+		panel_2 = new JPanel();
+		panel_2.setPreferredSize(new Dimension(630, 10));
+		panel_2.setMinimumSize(new Dimension(300, 10));
+		contentPane.add(panel_2, BorderLayout.EAST);
 		
+		
+		
+	}
+	public void atualizaTabeleBanco(){
+		DaoPontoLeitura dao=new DaoPontoLeitura();
+		table1.removeAll();
+		table1.setModel(new MotorTableModelPontoDeLeitura(
+				dao.retornaIntervaloDeData(textField.getText(), textField_1.getText())));
 		
 	}
 

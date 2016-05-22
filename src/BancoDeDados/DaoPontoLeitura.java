@@ -32,7 +32,7 @@ public class DaoPontoLeitura {
 
 			// Begin the transaction
 			transaction.begin();
-			manager. merge(ponto);
+			manager.persist(ponto);
 			System.out.println("gravou");
 			// Commit the transaction
 			transaction.commit();
@@ -96,7 +96,7 @@ public class DaoPontoLeitura {
 		EntityTransaction transaction = null;
 
 		try {
-			SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy hh:mm:ss"); //você pode usar outras máscaras
+			SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy"); //você pode usar outras máscaras
 			Date dataInicial=sdf1.parse(inicial);
 			Date dataFinal=sdf1.parse(fim);
 			transaction = manager.getTransaction();
@@ -144,12 +144,12 @@ public class DaoPontoLeitura {
 		return null;
 	}
 	
-	public List<pontoDeLeitura> lerUltimasLinha(int paginacao) {
+	public List<pontoDeLeitura> retornaPaginacao(int paginacao) {
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction transaction = null;
 		Query query = manager.createQuery("select c FROM pontoDeLeitura c");
-		query.setFirstResult(lerUltimaLinha().getCodigo()-20);
-		query.setMaxResults(20);
+		query.setFirstResult(lerUltimaLinha().getCodigo()-paginacao);
+		query.setMaxResults(paginacao);
 		List<pontoDeLeitura> cats = query.getResultList();
 		return cats;
 		      }

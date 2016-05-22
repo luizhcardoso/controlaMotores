@@ -56,7 +56,7 @@ public class DaoUsinada implements Serializable {
 	 * @return a List of Students
 	 */
 	
-	public List<Usinada> retornaTodoBanco() {
+	public List<Usinada> readAll() {
 
 		List<Usinada> usinada = null;
 
@@ -165,12 +165,12 @@ public class DaoUsinada implements Serializable {
 		return product;
 	}
 
-	public List<Usinada> lerUltimasLinha(int paginacao) {
+	public List<Usinada> retornaPaginacao(int paginacao) {
 		EntityManager manager = ENTITY_MANAGER_FACTORY.createEntityManager();
 		EntityTransaction transaction = null;
 		Query query = manager.createQuery("select c FROM Usinada c");
-		query.setFirstResult(lerUltimaLinha().getCodigo()-20);
-		query.setMaxResults(20);
+		query.setFirstResult(lerUltimaLinha().getCodigo()-paginacao);
+		query.setMaxResults(paginacao);
 		List<Usinada> cats = query.getResultList();
 		return cats;
 	}
@@ -255,7 +255,7 @@ public class DaoUsinada implements Serializable {
 	}
 	public String imprimeTodoBanco(){
 		String imprime="=======================Usinadas================================\n";
-		List<Usinada> usinada=retornaTodoBanco();
+		List<Usinada> usinada=readAll();
 		for(Usinada b : usinada){
 			imprime+="----------------------- Usinada Codigo : ["+b.getCodigo()+"]-------------------------------\n"+
 					"Status  " +  b.getStatus()+"\n"+

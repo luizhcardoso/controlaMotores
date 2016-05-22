@@ -49,6 +49,7 @@ public class TimerLeituraEGravacaoTeste {
 			daoPontoLeitura=new DaoPontoLeitura();
 			daoPontoLeitura.escrevePontoLeitura(ponto);
 			System.out.println(ponto.toStringThis());
+			
 			}
 			if(controle.getAberturaDePorta()!=null){ //aqui !
 				System.out.println("Entoru na pressa agora !");

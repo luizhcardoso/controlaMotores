@@ -9,7 +9,7 @@ import java.awt.event.*;
 import javax.swing.*;
 
 import BancoDeDados.DaoPontoLeitura;
-import View.MotorTableModelPontoDeLeitura;
+import viewModeloTabelas.MotorTableModelPontoDeLeitura;
 
 
 /**

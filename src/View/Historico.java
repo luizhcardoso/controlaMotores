@@ -5,16 +5,21 @@ import java.awt.EventQueue;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.text.MaskFormatter;
 
 import BancoDeDados.DaoPontoLeitura;
 import BancoDeDados.DaoUsinada;
 import Entity.pontoDeLeitura;
-import Teste.renderTable;
+import viewModeloTabelas.MotorTableModelPontoDeLeitura;
+import viewModeloTabelas.renderTable;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.ParseException;
 import java.util.List;
 import java.awt.Toolkit;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class Historico extends JFrame {
@@ -25,11 +30,11 @@ public class Historico extends JFrame {
 	private JPanel panel_1;
 	private JLabel lblDataInicial;
 	private JLabel lblDataFinal;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JButton btnBuscar;
 	private JButton btnAtualizar;
-
+	private JFormattedTextField formattedTextField;
+	private JFormattedTextField formattedTextField_1;
+	private JButton btnBuscar_1;
+	private JScrollPane scrollPane ;
 	/**
 	 * Launch the application.
 	 */
@@ -50,7 +55,7 @@ public class Historico extends JFrame {
 		contentPane.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 		
-		JScrollPane scrollPane = new JScrollPane();
+		scrollPane = new JScrollPane();
 		panel.add(scrollPane);
 		//cria modelo de tabela para tabela
 		MotorTableModelPontoDeLeitura table=new MotorTableModelPontoDeLeitura(new DaoPontoLeitura().readAll());
@@ -59,10 +64,6 @@ public class Historico extends JFrame {
 		table1.setDefaultRenderer(Object.class, new renderTable());
 		table1.setModel(table);
 	
-
-
-		
-		
 		scrollPane.setViewportView(table1);
 		
 		panel_1 = new JPanel();
@@ -82,28 +83,49 @@ public class Historico extends JFrame {
 		lblDataInicial = new JLabel("Data inicial: ");
 		panel_1.add(lblDataInicial);
 		
-		textField = new JTextField();
-		panel_1.add(textField);
-		textField.setColumns(10);
+		MaskFormatter formater = new MaskFormatter();
+		MaskFormatter formater2 = new MaskFormatter();
+		try {
+			formater.setMask("##/##/####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+	
+		try {
+			formater2.setMask("##/##/####");
+		} catch (ParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		formattedTextField = new JFormattedTextField();
+		formattedTextField.setColumns(8);
+		formattedTextField.setHorizontalAlignment(javax.swing.JTextField.CENTER);  
+		formater2.install(formattedTextField);
+		panel_1.add(formattedTextField);
 		
 		lblDataFinal = new JLabel("Data Final:");
 		panel_1.add(lblDataFinal);
 		
-		textField_1 = new JTextField();
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
-		
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseReleased(MouseEvent e) {
+		formattedTextField_1 = new JFormattedTextField();
+		formattedTextField_1.setColumns(8);
+		formattedTextField_1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+		formater.install(formattedTextField_1);
+		panel_1.add(formattedTextField_1);
+	
+		btnBuscar_1 = new JButton("Buscar");
+		btnBuscar_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
 				DaoPontoLeitura dao=new DaoPontoLeitura();
 				table1.removeAll();
 				table1.setModel(new MotorTableModelPontoDeLeitura(
-						dao.retornaIntervaloDeData(textField.getText(), textField_1.getText())));
+						dao.retornaIntervaloDeData(formattedTextField.getText(), formattedTextField_1.getText())));
+				System.out.println(formattedTextField.getText()+"  "+ formattedTextField_1.getText());
 			}
 		});
-		panel_1.add(btnBuscar);
+		panel_1.add(btnBuscar_1);
 		
 		
 		
@@ -135,31 +157,28 @@ public class Historico extends JFrame {
 		lblDataInicial = new JLabel("Data inicial: ");
 		panel_1.add(lblDataInicial);
 		
-		textField = new JTextField();
-		panel_1.add(textField);
-		textField.setColumns(10);
-		
-		lblDataFinal = new JLabel("Data Final:");
-		panel_1.add(lblDataFinal);
-		
-		textField_1 = new JTextField();
-		panel_1.add(textField_1);
-		textField_1.setColumns(10);
-		
-		btnBuscar = new JButton("Buscar");
-		btnBuscar.addMouseListener(new MouseAdapter() {
+		btnBuscar_1 = new JButton("Buscar");
+		btnBuscar_1.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				DaoPontoLeitura dao=new DaoPontoLeitura();
-				table1.removeAll();
-				table1.setModel(new MotorTableModelPontoDeLeitura(
-						dao.retornaIntervaloDeData(textField.getText(), textField_1.getText())));
+				atualizaTabeleBanco();
 			}
 		});
-		panel_1.add(btnBuscar);
+		panel_1.add(btnBuscar_1);
 		panel_1.setVisible(false);
 		
 		
 	}
+	
+	public void atualizaTabeleBanco(){
+		DaoPontoLeitura dao=new DaoPontoLeitura();
+		table1.removeAll();
+		table1.setModel(new MotorTableModelPontoDeLeitura(
+				dao.readAll()));
+		JScrollBar bar = scrollPane.getVerticalScrollBar();  
+        bar.setValue(bar.getMaximum());  
+	}
+	
+	
 
 }

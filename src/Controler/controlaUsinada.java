@@ -277,11 +277,19 @@ public class controlaUsinada {
 	}
 
 	public String formataData(Date data){
-		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
+		return fm.format(data);
+	}
+	public String formataDataSemSegundos(Date data){
+		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy [HH:mm]");
 		return fm.format(data);
 	}
 	public String formataHoraMinutosSegundos(Date data){
 		SimpleDateFormat fm = new SimpleDateFormat("HH:mm:ss");
+		return fm.format(data);
+	}
+	public String formataApenasData(Date data){
+		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
 		return fm.format(data);
 	}
 
