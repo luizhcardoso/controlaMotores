@@ -275,6 +275,33 @@ public class controlaUsinada {
 
 		return txt;
 	}
+	
+	public Date calculadoraDeHoras(long segundos){
+		Date txt=null; 
+		DateFormat somaDiferenca =null;
+		try{
+			// constrói a primeira data
+			// vamos obter a diferença em semanas, dias, horas,
+			// minutos e segundos
+			
+			int horas = (int)Math.floor(segundos / 3600);
+			segundos -= horas * 3600;
+			int minutos = (int)Math.floor(segundos / 60);
+			segundos -= minutos * 60;
+
+			somaDiferenca = new SimpleDateFormat("HH:mm:ss");
+			txt = (Date)somaDiferenca.parse(horas+":"+minutos+":"+segundos);
+
+			// exibe o resultado
+			//			      txt=(horas +":"+ minutos +":"+segundos);
+		}
+		catch(ParseException e){
+			e.printStackTrace();
+		}
+
+
+		return txt;
+	}
 
 	public String formataData(Date data){
 		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy - HH:mm:ss");
@@ -292,6 +319,6 @@ public class controlaUsinada {
 		SimpleDateFormat fm = new SimpleDateFormat("dd/MM/yyyy");
 		return fm.format(data);
 	}
-
+	
 
 }
